@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "376865", "Marley2809", "zooarcadiaa_zoo");
+$conn = new mysqli("2a00:b6e0:1:210:1::1", "376865", "Marley2809", "zooarcadiaa_zoo");
 
 if ($conn->connect_error) {
     die("Échec de la connexion : " . $conn->connect_error);
