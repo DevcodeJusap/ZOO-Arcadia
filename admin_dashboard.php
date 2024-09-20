@@ -2,9 +2,9 @@
 session_start();
 include 'session_check.php';
 $servername = "localhost";
-$username = "root";
-$password = "MV_12CycB/B7wt4v";
-$dbname = "zooarcadia";
+$username = "376865";
+$password = "Marley2809";
+$dbname = "zooarcadiaa_zoo";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -197,7 +197,7 @@ $result = $conn->query($sql);
                         <p>Nombre total de likes:
                             
                         <?php
-            $conn = new mysqli("localhost", "root", "MV_12CycB/B7wt4v", "zooarcadia");
+            $conn = new mysqli("localhost", "376865", "Marley2809", "zooarcadiaa_zoo");
 
             if ($conn->connect_error) {
                 die("Échec de la connexion : " . $conn->connect_error);

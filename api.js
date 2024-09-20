@@ -8,9 +8,9 @@ app.use(cors());
 
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'MV_12CycB/B7wt4v',
-    database: 'zooarcadia'
+    user: '376865',
+    password: 'Marley280',
+    database: 'zooarcadiaa_zoo'
 });
 
 db.connect((err) => {

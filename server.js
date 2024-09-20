@@ -5,9 +5,9 @@ const port = 3000;
 
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'MV_12CycB/B7wt4v',
-    database: 'zooarcadia'
+    user: '376865',
+    password: 'Marley2809',
+    database: 'zooarcadiaa_zoo'
 });
 
 db.connect((err) => {
