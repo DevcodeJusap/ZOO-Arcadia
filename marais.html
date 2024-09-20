@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-Content-Type-Options" content="nosniff">
+        <meta http-equiv="X-Frame-Options" content="DENY">
+        <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">        <link rel="icon" type="" href="image/presentation/logo.png">
+        <title>Les marais</title>
+        <link rel="stylesheet" href="css/savane-marais-jungle.css"/>
+        <link rel="stylesheet" href="css/likes.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    </head>
+    <body id="marais.html">
+        <header>
+            <a href="#" id="logo-link">
+                <img src="image/presentation/logo.png" alt="Logo Zoo-Arcadia" id="logo">
+            </a>
+            <nav>
+                <ul class="centered">
+                    <li><button class="btn-headers accueil-btn" id="accueil-btn" onclick="location.href='index.html'">Accueil</button><div class="box"></div></li> 
+                    <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='service.html'">Service</button></li> <span></span>
+                    <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='habitat.html'">Habitat</button></li> <span></span>
+                    <li><button class="btn-headers contact-btn" id="contact-btn" onclick="location.href='contact.html'">Contact</button></li> <span></span>
+                </ul>
+                <button class="btn-headers login-btn" id="login-btn" onclick="location.href='login.html'" style="float: right;">login</button> <span></span>
+            </nav>
+        </header>
+        <main>
+            <h1>Les marais</h1>
+            <p class="bienvenue">Bienvenue dans la savane d'Afrique, un écosystème riche et varié où les animaux sauvages règnent en maîtres.</p> <br>
+            <section class="savane">
+                <div class="cartes-conteneur">
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/Design sans titre (34).png" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_23">Nom : </p>
+                        <p id="species_23">Espèce : </p>
+                        <p id="age_23">Âge : </p>
+                        <p id="weight_23">Poids : </p>
+                        <p id="food_23">Nourriture : </p>
+                        <p id="last_meal_23">Dernier repas : </p>
+                        <p id="food_quantity_23">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-23" onclick="likeAnimal(23)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-23" class="likes-counter" data-animal-id="23">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/iguana-1654234_1280.jpg" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_24">Nom : </p>
+                        <p id="species_24">Espèce : </p>
+                        <p id="age_24">Âge : </p>
+                        <p id="weight_24">Poids : </p>
+                        <p id="food_24">Nourriture : </p>
+                        <p id="last_meal_24">Dernier repas : </p>
+                        <p id="food_quantity_24">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-24" onclick="likeAnimal(24)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-24" class="likes-counter" data-animal-id="24">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/Design sans titre (24).png" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_25">Nom : </p>
+                        <p id="species_25">Espèce : </p>
+                        <p id="age_25">Âge : </p>
+                        <p id="weight_25">Poids : </p>
+                        <p id="food_25">Nourriture : </p>
+                        <p id="last_meal_25">Dernier repas : </p>
+                        <p id="food_quantity_25">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-25" onclick="likeAnimal(25)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-25" class="likes-counter" data-animal-id="25">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/Design sans titre (25).png" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_26">Nom : </p>
+                        <p id="species_26">Espèce : </p>
+                        <p id="age_26">Âge : </p>
+                        <p id="weight_26">Poids : </p>
+                        <p id="food_26">Nourriture : </p>
+                        <p id="last_meal_26">Dernier repas : </p>
+                        <p id="food_quantity_26">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-26" onclick="likeAnimal(26)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-26" class="likes-counter" data-animal-id="26">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/otter-7953030_1280.webp" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_27">Nom : </p>
+                        <p id="species_27">Espèce : </p>
+                        <p id="age_27">Âge : </p>
+                        <p id="weight_27">Poids : </p>
+                        <p id="food_27">Nourriture : </p>
+                        <p id="last_meal_27">Dernier repas : </p>
+                        <p id="food_quantity_27">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-27" onclick="likeAnimal(27)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-27" class="likes-counter" data-animal-id="27">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/Design sans titre (28).png" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_28">Nom : </p>
+                        <p id="species_28">Espèce : </p>
+                        <p id="age_28">Âge : </p>
+                        <p id="weight_28">Poids : </p>
+                        <p id="food_28">Nourriture : </p>
+                        <p id="last_meal_28">Dernier repas : </p>
+                        <p id="food_quantity_28">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-28" onclick="likeAnimal(28)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-28" class="likes-counter" data-animal-id="28">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/Design sans titre (29).png" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_29">Nom : </p>
+                        <p id="species_29">Espèce : </p>
+                        <p id="age_29">Âge : </p>
+                        <p id="weight_29">Poids : </p>
+                        <p id="food_29">Nourriture : </p>
+                        <p id="last_meal_29">Dernier repas : </p>
+                        <p id="food_quantity_29">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-29" onclick="likeAnimal(29)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-29" class="likes-counter" data-animal-id="29">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/Design sans titre (30).png" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_30">Nom : </p>
+                        <p id="species_30">Espèce : </p>
+                        <p id="age_30">Âge : </p>
+                        <p id="weight_30">Poids : </p>
+                        <p id="food_30">Nourriture : </p>
+                        <p id="last_meal_30">Dernier repas : </p>
+                        <p id="food_quantity_30">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-30" onclick="likeAnimal(30)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-30" class="likes-counter" data-animal-id="30">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/Design sans titre (31).png" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_31">Nom : </p>
+                        <p id="species_31">Espèce : </p>
+                        <p id="age_31">Âge : </p>
+                        <p id="weight_31">Poids : </p>
+                        <p id="food_31">Nourriture : </p>
+                        <p id="last_meal_31">Dernier repas : </p>
+                        <p id="food_quantity_31">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-31" onclick="likeAnimal(31)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-31" class="likes-counter" data-animal-id="31">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/Design sans titre (32).png" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_32">Nom : </p>
+                        <p id="species_32">Espèce : </p>
+                        <p id="age_32">Âge : </p>
+                        <p id="weight_32">Poids : </p>
+                        <p id="food_32">Nourriture : </p>
+                        <p id="last_meal_32">Dernier repas : </p>
+                        <p id="food_quantity_32">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-32" onclick="likeAnimal(32)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-32" class="likes-counter" data-animal-id="32">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <img src="image/marais/Design sans titre (33).png" alt="Image de la savane">
+                    </div>
+                    <div class="back">
+                        <p id="animal_name_33">Nom : </p>
+                        <p id="species_33">Espèce : </p>
+                        <p id="age_33">Âge : </p>
+                        <p id="weight_33">Poids : </p>
+                        <p id="food_33">Nourriture : </p>
+                        <p id="last_meal_33">Dernier repas : </p>
+                        <p id="food_quantity_33">Quantité de nourriture : </p>
+                        <div>
+                            <div class="likes-container"><br>
+                                <button class="heart-btn" id="heart-33" onclick="likeAnimal(33)" title="Like"><i class="fas fa-heart"></i></button>
+                                <span id="likes-33" class="likes-counter" data-animal-id="33">0</span> likes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="habitat.html" class="btn retoure">Retour</a>
+        </div>
+
+        <script src="likes.js"></script>
+        <script>    document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM entièrement chargé et analysé');
+            fetchAnimalData();
+        });
+        
+        function fetchAnimalData() {
+            console.log('Appel à fetchAnimalData');
+            fetch('http://localhost:3000/animal')
+                .then(response => {
+                    console.log('Réponse reçue du serveur');
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Données reçues:', data);
+                    data.forEach((animal) => {
+                        const cardIndex = animal.id;
+                        console.log(`Mise à jour de la carte ${cardIndex}`);
+                        const animalNameElement = document.getElementById(`animal_name_${cardIndex}`);
+                        const speciesElement = document.getElementById(`species_${cardIndex}`);
+                        const ageElement = document.getElementById(`age_${cardIndex}`);
+                        const weightElement = document.getElementById(`weight_${cardIndex}`);
+                        const foodElement = document.getElementById(`food_${cardIndex}`);
+                        const lastMealElement = document.getElementById(`last_meal_${cardIndex}`);
+                        const foodQuantityElement = document.getElementById(`food_quantity_${cardIndex}`);
+                        
+                        if (animalNameElement && speciesElement && ageElement && weightElement && foodElement && lastMealElement && foodQuantityElement) {
+                            animalNameElement.innerText = `Nom : ${animal.animal_name}`;
+                            speciesElement.innerText = `Espèce : ${animal.species}`;
+                            ageElement.innerText = `Âge : ${animal.age}`;
+                            weightElement.innerText = `Poids : ${animal.weight}`;
+                            foodElement.innerText = `Nourriture : ${animal.food}`;
+                            lastMealElement.innerText = `Dernier repas : ${animal.last_meal}`;
+                            foodQuantityElement.innerText = `Quantité de nourriture : ${animal.food_quantity}`;
+                        } else {
+                            
+                        }
+                    });
+                })
+                .catch(error => console.error('Erreur:', error));
+        }
+        </script>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    <h3 class="text-uppercase">À propos de nous</h3>
+                        <p class="text-muted">Zoo-Arcadia est un parc zoologique situé en Bretagne, près de la forêt de Brocéliande. Nous sommes dédiés à la conservation de la biodiversité et au bien-être animal.</p>
+                    <br><h3 class="text-uppercase">Horaires d'ouverture</h3>
+                    <p class="text-muted">Du Mardi au  Dimanche de 9h à 18h30</p>
+                    <p class="text-muted">Ainsi que les jours fériers</p>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <h3 class="text-uppercase">Liens utiles</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="service.html">Nos services</a></li>
+                            <li><a href="habitat.html">Nos habitats</a></li>
+                            <li><a href="contact.html">Nous contacter</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <h3 class="text-uppercase">Nos coordonnées</h3>
+                        <ul class="list-unstyled">
+                            <li>Adresse : Zoo-Arcadia, Route de Brocéliande, 35300 Rennes, France</li>
+                            <li>Téléphone : 02 99 99 99 99</li>
+                            <li>Email : contact@zoo-arcadia.fr</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="copyright text-muted">&copy; 2024 Zoo-Arcadia. Tous droits réservés. Créé par <a href="https://codelinky.com">C@deLinky</a></p>
+            </div>
+        </footer>
+    </body>
+</html>

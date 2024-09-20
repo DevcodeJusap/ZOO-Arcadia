@@ -1,0 +1,43 @@
+/* Importations */
+@import 'savane-marais-jungle.css';
+@import 'global.css';
+@import 'header.css';
+@import 'footer.css';
+
+
+
+
+
+.likes-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 1px; 
+    width: 100%;
+    margin-bottom: 1px; 
+}
+.likes-counter {
+    margin-right: 5px; 
+}
+.heart-btn {
+    background: none;
+    border: none;
+    color: grey;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.heart-btn:hover, .heart-btn:focus {
+    color: rgb(255, 0, 76);
+    transform: scale(1.2); 
+}
+
+.heart-btn.liked {
+    color: rgb(255, 0, 76);
+    transform: scale(1.2);
+}
+.back {
+    position: relative;
+}

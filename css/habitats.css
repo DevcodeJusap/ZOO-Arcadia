@@ -1,0 +1,108 @@
+@import 'responsive.css';
+@import 'global.css';
+@import 'header.css';
+@import 'footer.css';
+@import'style.css';
+
+.savane-color {
+    color: #d49144; 
+}
+.marais-color {
+    color: #33c5ff; 
+}
+.jungle-color {
+    color: #33ffaa; 
+} 
+
+.habitat {
+    position: relative;
+    height: 70vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.image-fond {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 80%;
+    margin: 20px 10%; 
+    border: 5px solid #fff;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.678);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.description {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+}
+
+.btn-habitat {
+    position: relative;
+    background-color: #fff;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(54, 53, 53, 0.1);
+}
+
+.btn-habitat:before {
+    content: "";
+    background: linear-gradient(
+        45deg,
+        #ff0000,
+        #ff7300,
+        #fffb00,
+        #48ff00,
+        #00ffd5,
+        #002bff,
+        #7a00ff,
+        #ff00c8,
+        #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowingbtn 20s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 50px;
+}
+
+.btn-habitat:hover:before {
+    opacity: 1;
+}
+
+.btn-habitat:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #eadbdb00;
+    left: 0;
+    top: 0;
+    border-radius: 50px;
+}
+
+.btn-habitat:hover {
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}

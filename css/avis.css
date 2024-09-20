@@ -1,0 +1,88 @@
+@import 'responsive.css';
+@import 'global.css';
+@import 'header.css';
+@import 'footer.css';
+
+
+
+
+.carousel-avis {
+    position: relative;
+    width: 100%;
+    margin: 20px auto;
+    height: px;
+}
+
+.carousel-avis .item {
+    background-color: #fff;
+    height: 200px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-avis .avis-content {
+    font-size: 16px;
+    font-style: italic;
+    color: #666;
+}
+
+.carousel-avis .rating {
+    font-size: 18px;
+    color: #ffd700;
+    margin-top: 10px;
+}
+
+.carousel-avis .rating i {
+    margin-right: 5px;
+}
+
+.carousel-avis .owl-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+.carousel-avis .owl-prev, .carousel-avis .owl-next {
+    position: absolute;
+    font-size: 24px;
+    color: #333;
+    background-color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.carousel-avis .owl-prev {
+    left: -30px;
+}
+
+.carousel-avis .owl-next {
+    right: -30px;
+}
+
+.carousel-avis .owl-dots {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.carousel-avis .owl-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin: 0 5px;
+}
+
+.carousel-avis .owl-dot.active {
+    background-color: #333;
+}
+
+.carousel-avis .owl-stage-outer{
+    height: 250px;
+}

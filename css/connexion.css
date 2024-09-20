@@ -1,0 +1,102 @@
+
+@import 'responsive.css';
+@import 'global.css';
+@import 'header.css';
+@import 'footer.css';
+@import 'style.css';
+
+
+
+
+form {
+    width: 30%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 20px;
+    color: #707070; 
+}
+
+
+input[type="text"], input[type="password"], textarea {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    resize: none;
+    border: 1px solid #ccc;
+    color: #000; 
+}
+
+
+select[name="role"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f9f9f9; 
+    color: #333; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    font-size: 16px; 
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    cursor: pointer; 
+}
+
+
+select[name="role"] option {
+    padding: 10px;
+    background-color: #fff; 
+    color: #333; 
+}
+
+
+select[name="role"]:hover {
+    border-color: #888; 
+}
+
+
+select[name="role"]:focus {
+    outline: none; 
+    border-color: #555; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center; 
+}
+
+
+form button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #af984c; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    transition: background-color 0.3s ease;
+}
+
+
+form button:hover {
+    background-color: #45a049;
+}
+
+form button:active {
+    background-color: #3e8e41;
+}

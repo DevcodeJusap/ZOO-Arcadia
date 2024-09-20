@@ -1,0 +1,117 @@
+
+@import 'responsive.css';
+@import 'global.css';
+@import 'header.css';
+@import 'footer.css';
+@import 'style.css';
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+canvas {
+    position:absolute;
+    top: 0;
+    left: 0;
+    z-index: -200;
+}
+
+h1 {
+    padding-top: auto;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    background-image: linear-gradient(to right, #471d09, #945f1afd, #dada0c, #00aeff, #0000ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 50px;
+    line-height: 40px;
+    font-weight: 800;
+    position: relative;
+    text-transform: capitalize;
+    text-align: center; 
+    margin: 0 auto;
+    display: block;
+    
+}
+
+/* Styles pour le conteneur de l'avis */
+.avis-container {
+    width: 40%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+/* Styles pour les champs de formulaire */
+.avis-input input[type="text"],
+.avis-input textarea {
+    color: #000; 
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    resize: none;
+    border: 1px solid #ccc;
+    color: #000;
+}
+
+/* Styles pour le bouton d'envoi */
+.avis-input button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #af984c; 
+    color: white; 
+    border: none; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    font-size: 16px;    
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+}
+
+
+
+
+.avis-input button:hover {
+    background-color: #45a049;
+}
+.avis-input button:active {
+    background-color: #3e8e41;
+}
+
+
+/* Styles pour les étoiles de notation */
+.rating-star {
+    font-size: 3em;
+    cursor: pointer;
+    color: #ccc;
+
+}
+
+.rating-star.selected {
+    color: #ffc60a;
+}
+
+/* Styles pour les étoiles de notation au survol */
+
+.rating-star:hover {
+    color: #ffc60a;
+}
+
+
+
+
+
+

@@ -1,0 +1,125 @@
+
+@import 'header.css';
+@import 'footer.css';
+
+
+
+h1 {
+    padding-top: 80px;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    background-image: linear-gradient(to right, #471d09, #945f1afd, #dada0c, #00aeff, #0000ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 50px;
+    line-height: 40px;
+    font-weight: 800;
+    position: relative;
+    text-transform: capitalize;
+    text-align: center; 
+    margin: 0 auto;
+    display: block;
+    
+}
+
+
+.paragraph-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    align-items: center;
+}
+
+.title {
+    width: 80%; 
+    margin: 20px auto; 
+    text-align: center; 
+}
+
+.paragraph {
+    width: 80%; 
+    margin: 20px auto; 
+    text-align: center; 
+}
+
+p {
+    text-align: center; 
+}
+
+.service-photo {
+    width: 40%; 
+    height: 200px; 
+    object-fit: cover;
+    border-radius: 5%;
+    margin-left: 20px; 
+}
+
+.service.owl-carousel {
+    width: 40%; 
+    margin-left: 20px;
+}
+
+.service.owl-carousel .item {
+    width: 100%;
+    height: 300px; 
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.owl-nav {
+    display: none;
+}
+
+
+.fond-blanc {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: black;
+}
+
+.fond-maron {
+    background-color: #584c33;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.service.plan {
+    display: inline-block;
+    width: 300px; 
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fdfdfd;
+    color: black;
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    position: relative; 
+}
+
+.service.plan button {
+    margin: 0 auto; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #af984c;
+    cursor: pointer;
+}
+.service.plan button[type="button"]:hover{
+    background-color: #3e8e41 ;
+    color:#af984c;
+}
+.service.plan img {
+    width: 120px; 
+    height: 90px;
+    margin-left: 20px; 
+}
+

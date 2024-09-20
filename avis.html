@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+    <title>Donnez votre avis - Zoo-Arcadia</title>
+    
+    <link rel="stylesheet" href="css/votreavis.css">
+    
+</head>
+<body>
+    <header>
+        <a href="#" id="logo-link">
+            <img src="image/presentation/logo.png" alt="Logo Zoo-Arcadia" id="logo">
+        </a>
+        <nav>
+            <ul class="centered">
+                <li><button class="btn-headers accueil-btn" id="accueil-btn" onclick="location.href='index.html'">Accueil</button></li> 
+                <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='service.html'">Service</button></li> 
+                <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='habitat.html'">Habitat</button></li> 
+                <li><button class="btn-headers contact-btn" id="contact-btn" onclick="location.href='contact.html'">Contact</button></li>
+            </ul>
+            <button class="btn-headers login-btn" id="login-btn" onclick="location.href='login.html'" style="float: right;">login</button>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Votre avis</h1>
+        <p style="text-align: center;">Votre avis est pour nous très important !</p>
+        <div class="avis-container">
+            
+            <form action="submit_avis.php" method="post">
+                <div class="avis-rating">
+                    <span class="rating-star" data-rating="1">&#9733;</span>
+                    <span class="rating-star" data-rating="2">&#9733;</span>
+                    <span class="rating-star" data-rating="3">&#9733;</span>
+                    <span class="rating-star" data-rating="4">&#9733;</span>
+                    <span class="rating-star" data-rating="5">&#9733;</span>
+                </div>
+                <input type="hidden" name="note" id="note" required>
+                <div class="avis-input">
+                    <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+                    <textarea id="avis" name="avis" placeholder="Votre avis" required></textarea><br>
+                    <button type="submit" class="btn-envoyer">Envoyer</button>
+                </div>
+            </form>
+        </div>
+        <canvas id="bubbleCanvas"></canvas>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                <h3 class="text-uppercase">À propos de nous</h3>
+                    <p class="text-muted">Zoo-Arcadia est un parc zoologique situé en Bretagne, près de la forêt de Brocéliande. Nous sommes dédiés à la conservation de la biodiversité et au bien-être animal.</p>
+                <br><h3 class="text-uppercase">Horaires d'ouverture</h3>
+                <p class="text-muted">Du Mardi au  Dimanche de 9h à 18h30</p>
+                <p class="text-muted">Ainsi que les jours fériers</p>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <h3 class="text-uppercase">Liens utiles</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="service.html">Nos services</a></li>
+                        <li><a href="habitat.html">Nos habitats</a></li>
+                        <li><a href="contact.html">Nous contacter</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <h3 class="text-uppercase">Nos coordonnées</h3>
+                    <ul class="list-unstyled">
+                        <li>Adresse : Zoo-Arcadia, Route de Brocéliande, 35300 Rennes, France</li>
+                        <li>Téléphone : 02 99 99 99 99</li>
+                        <li>Email : contact@zoo-arcadia.fr</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="copyright text-muted">&copy; 2024 Zoo-Arcadia. Tous droits réservés. Créé par <a href="https://codelinky.com">C@deLinky</a></p>
+        </div>
+    </footer>
+    <script>
+        const canvas = document.getElementById('bubbleCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        const bubbles = [];
+        
+        function randomNeonColor() {
+            const colors = ['#af984c', '#471d09','#dada0c','#00aeff','', '#48ff00','#00ffd5','','#7a00ff',];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        function createBubble() {
+            const bubble = {
+                x: Math.random() * canvas.width,
+                y: canvas.height + Math.random() * 100,
+                radius: Math.random() * 1 + 1,
+                speed: Math.random() * 1 + 0.5,
+                oscillationAmplitude: Math.random() * 10 + 10,
+                oscillationSpeed: Math.random() * 0.02 + 0.01,
+                offset: Math.random() * Math.PI * 2,
+                color: randomNeonColor()
+            };
+            bubbles.push(bubble);
+        }
+        
+        function drawBubble(bubble) {
+            ctx.beginPath();
+            const oscillation = Math.sin(bubble.y * bubble.oscillationSpeed + bubble.offset) * bubble.oscillationAmplitude;
+            ctx.arc(bubble.x + oscillation, bubble.y, bubble.radius, 0, Math.PI * 2);
+            ctx.fillStyle = bubble.color;
+            ctx.fill();
+            ctx.closePath();
+        }
+        
+        function updateBubbles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+            for (let i = 0; i < bubbles.length; i++) {
+                const bubble = bubbles[i];
+                bubble.y -= bubble.speed;
+        
+                if (bubble.y + bubble.radius < 0) {
+                    bubbles.splice(i, 1);
+                    i--;
+                } else {
+                    drawBubble(bubble);
+                }
+            }
+            for (let i = 0; i < 5; i++) {
+                    createBubble();
+            }
+        
+            requestAnimationFrame(updateBubbles);
+            console.log(bubbles.length)
+        }
+        
+        updateBubbles();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.rating-star');
+            const noteInput = document.getElementById('note');
+
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    noteInput.value = rating;
+
+                    stars.forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                    for (let i = 0; i < rating; i++) {
+                        stars[i].classList.add('selected');
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

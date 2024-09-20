@@ -1,0 +1,32 @@
+:root {
+  --primary-color: #af984c; 
+  --secondary-color: #3E8E41; 
+  --tertiary-color: #87CEEB; 
+  --text-color: #ffffff; 
+  --background-color: #584c33;
+  --secondary-background-color: #964B00;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 10px ;
+  padding: 10px;
+}
+
+
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+
+.dark {
+  background-color: #ffffff;
+}
+
