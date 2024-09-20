@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'session_check.php';
-$servername = "localhost";
+$servername = "mysql-zooarcadiaa.alwaysdata.net";
 $username = "376865";
 $password = "Marley2809";
 $dbname = "zooarcadiaa_zoo";

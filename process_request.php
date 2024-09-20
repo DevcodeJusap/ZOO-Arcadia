@@ -2,7 +2,7 @@
 
 include 'session_check.php';
 
-$servername = "localhost";
+$servername = "mysql-zooarcadiaa.alwaysdata.net";
 $username = "376865";
 $password = "Marley2809";
 $dbname = "zooarcadiaa_zoo";
@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Debugging: Print the received POST data
+    
     echo "<pre>";
     print_r($_POST);
     echo "</pre>";

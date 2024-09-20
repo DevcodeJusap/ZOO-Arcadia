@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: 'mysql-zooarcadiaa.alwaysdata.net',
     user: '376865',
     password: 'Marley2809',
     database: 'zooarcadiaa_zoo'

@@ -7,7 +7,7 @@ const port = 3000;
 app.use(cors());
 
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: 'mysql-zooarcadiaa.alwaysdata.net',
     user: '376865',
     password: 'Marley280',
     database: 'zooarcadiaa_zoo'
