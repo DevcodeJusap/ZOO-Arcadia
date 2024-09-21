@@ -13,8 +13,8 @@ header {
   height: 100px;
   cursor: pointer;
   margin-right: 20px;
-  max-width: 200px; /* Taille maximale du logo */
-  height: auto; /* Maintient le ratio d'aspect */
+  max-width: 200px; 
+  height: auto; 
 }
 
 nav {

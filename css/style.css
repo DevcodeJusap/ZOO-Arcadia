@@ -116,7 +116,7 @@ h3{
     height: 100vh;
     background-size: cover;
     background-position: center;
-    z-index: -1;
+    z-index: -2;
 }
 
 .game-section {
@@ -220,7 +220,7 @@ h3{
 
 .section2 {
     min-height: 700px;
-    background-image: url('../image/habitats/Jungle.png');
+    background-image: url('../image/habitats/Jungle.webp');
     background-size: cover;
     background-position: center;
     flex-direction: column;
