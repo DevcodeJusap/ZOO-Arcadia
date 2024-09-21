@@ -2,15 +2,21 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_USER:', process.env.DB_USER);
+console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
+console.log('DB_NAME:', process.env.DB_NAME);
+console.log('PORT:', process.env.PORT);
+
 const db = mysql.createConnection({
-    host: 'mysql-zooarcadiaa.alwaysdata.net',
-    user: '376865',
-    password: 'Marley280',
-    database: 'zooarcadiaa_zoo'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 db.connect((err) => {
@@ -36,7 +42,3 @@ app.get('/animal', (req, res) => {
 app.listen(port, () => {
     console.log(`Serveur API démarré sur le port ${port}`);
 });
-
-
-
-
