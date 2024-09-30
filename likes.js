@@ -1,4 +1,7 @@
-
+function likeAnimal(animalId) {
+    // Implémentez la logique pour aimer un animal ici
+    console.log(`Animal avec ID ${animalId} aimé.`);
+}
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.heart-btn').forEach(button => {
         const newButton = button.cloneNode(true);

@@ -241,6 +241,18 @@ h3{
     align-items: center;
     margin: 0 auto;
 }
+.center-button:hover {
+    background-color: #3e8e41;
+}
+.center-button {
+    background-color: #af984c;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+}
 
 
 
