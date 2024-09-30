@@ -246,42 +246,51 @@
             </section>
         </main>
         <script src="likes.js"></script>
-        <script>    document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM entièrement chargé et analysé');
-            fetchAnimalData();
-        });
-    
-        function fetchAnimalData() {
-            fetch('https://mysql-zooarcadiaa.alwaysdata.net/animals')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Données reçues:', data);
-                    data.forEach((animal) => {
-                        const cardIndex = animal.id;
-                        console.log(`Mise à jour de la carte ${cardIndex}`);
-                        const animalNameElement = document.getElementById(`animal_name_${cardIndex}`);
-                        const speciesElement = document.getElementById(`species_${cardIndex}`);
-                        const ageElement = document.getElementById(`age_${cardIndex}`);
-                        const weightElement = document.getElementById(`weight_${cardIndex}`);
-                        const foodElement = document.getElementById(`food_${cardIndex}`);
-                        const lastMealElement = document.getElementById(`last_meal_${cardIndex}`);
-                        const foodQuantityElement = document.getElementById(`food_quantity_${cardIndex}`);
-    
-                        if (animalNameElement && speciesElement && ageElement && weightElement && foodElement && lastMealElement && foodQuantityElement) {
-                            animalNameElement.innerText = `Nom : ${animal.animal_name}`;
-                            speciesElement.innerText = `Espèce : ${animal.species}`;
-                            ageElement.innerText = `Âge : ${animal.age}`;
-                            weightElement.innerText = `Poids : ${animal.weight}`;
-                            foodElement.innerText = `Nourriture : ${animal.food}`;
-                            lastMealElement.innerText = `Dernier repas : ${animal.last_meal}`;
-                            foodQuantityElement.innerText = `Quantité de nourriture : ${animal.food_quantity}`;
-                        } else {
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('DOM entièrement chargé et analysé');
+                fetchAnimalData();
+            });
+        
+            function fetchAnimalData() {
+                fetch('https://mysql-zooarcadiaa.alwaysdata.net/zooarcadiaa_zoo/animals')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok ' + response.statusText);
                         }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Données reçues:', data);
+                        data.forEach((animal) => {
+                            const cardIndex = animal.id;
+                            console.log(`Mise à jour de la carte ${cardIndex}`);
+                            const animalNameElement = document.getElementById(`animal_name_${cardIndex}`);
+                            const speciesElement = document.getElementById(`species_${cardIndex}`);
+                            const ageElement = document.getElementById(`age_${cardIndex}`);
+                            const weightElement = document.getElementById(`weight_${cardIndex}`);
+                            const foodElement = document.getElementById(`food_${cardIndex}`);
+                            const lastMealElement = document.getElementById(`last_meal_${cardIndex}`);
+                            const foodQuantityElement = document.getElementById(`food_quantity_${cardIndex}`);
+        
+                            if (animalNameElement && speciesElement && ageElement && weightElement && foodElement && lastMealElement && foodQuantityElement) {
+                                animalNameElement.innerText = `Nom : ${animal.animal_name}`;
+                                speciesElement.innerText = `Espèce : ${animal.species}`;
+                                ageElement.innerText = `Âge : ${animal.age}`;
+                                weightElement.innerText = `Poids : ${animal.weight}`;
+                                foodElement.innerText = `Nourriture : ${animal.food}`;
+                                lastMealElement.innerText = `Dernier repas : ${animal.last_meal}`;
+                                foodQuantityElement.innerText = `Quantité de nourriture : ${animal.food_quantity}`;
+                            } else {
+                                console.warn(`Éléments DOM manquants pour la carte ${cardIndex}`);
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        alert('Une erreur est survenue lors de la récupération des données des animaux.');
                     });
-                })
-                .catch(error => console.error('Erreur:', error));
-        }
+            }
         </script>
 
             <div style="text-align: center; margin-top: 20px;">
