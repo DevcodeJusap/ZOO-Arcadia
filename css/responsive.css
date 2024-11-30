@@ -1,0 +1,106 @@
+/* Styles par défaut pour les appareils de bureau */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.header, .footer {
+    padding: 20px;
+    text-align: center;
+}
+
+.menu {
+    display: block;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+/* Styles pour les grands écrans */
+@media (min-width: 1200px) {
+    .container {
+        width: 70%;
+    }
+}
+
+/* Styles pour les tablettes */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .header, .footer {
+        padding: 15px;
+    }
+}
+
+/* Styles pour les téléphones */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+    }
+
+    .header {
+        font-size: 1.5em;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+    .footer {
+        font-size: 0.8em;
+    }
+}
+
+/* Styles pour les très petits écrans */
+@media (max-width: 320px) {
+    .header {
+        font-size: 1.2em;
+    }
+
+    .content {
+        padding: 5px;
+    }
+
+    .footer {
+        font-size: 0.7em;
+    }
+}
+
+/* Styles pour les orientations paysage */
+@media (orientation: landscape) {
+    .header, .footer {
+        padding: 10px;
+    }
+
+    .content {
+        padding: 15px;
+    }
+}
+
+/* Styles pour les écrans haute résolution */
+@media (min-resolution: 2dppx) {
+    body {
+        font-size: 1.1em;
+    }
+
+    .header, .footer {
+        padding: 25px;
+    }
+}

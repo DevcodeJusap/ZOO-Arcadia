@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    // Initialisation du carrousel d'accueil
     $('#swiper-accueil').owlCarousel({
         loop: true,
         margin: 0,
@@ -7,22 +8,13 @@ $(document).ready(function() {
         autoplayTimeout: 5000,
         autoplayHoverPause: false,
         responsive: {
-            0: {
-                items: 1
-            },
-            900: {
-                items: 1
-            },
-            5000: {
-                items: 1
-            }
+            0: { items: 1 },
+            900: { items: 1 },
+            5000: { items: 1 }
         }
     });
-});
 
-
-$(document).ready(function() {
-    
+    // Initialisation des autres carrousels
     const initCarousel = () => {
         console.log("Initialisation de la carrousel");
         $(".custom-carousel").owlCarousel({
@@ -41,19 +33,14 @@ $(document).ready(function() {
             autoplayTimeout: 8000,
             autoplayHoverPause: false,
             responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 2
-                },
-                1000: {
-                    items: 3
-                }
+                0: { items: 1 },
+                600: { items: 2 },
+                1000: { items: 3 }
             }
         });
     };
 
+    // Gestion des clics sur les éléments du carrousel
     const handleCarouselItemClick = () => {
         $(".custom-carousel .item").click(function() {
             const currentItem = $(this);
@@ -64,6 +51,7 @@ $(document).ready(function() {
         });
     };
 
+    // Gestion des clics sur le bouton "Déposer un avis"
     const handleAvisBtnClick = () => {
         $(".avis-btn").click(function() {
             console.log("Clic sur le bouton Déposer un avis");
@@ -71,20 +59,24 @@ $(document).ready(function() {
         });
     };
 
+    // Initialisation des carrousels et gestion des événements
     initCarousel();
     initAvisCarousel();
     handleCarouselItemClick();
     handleAvisBtnClick();
 
+    // Gestion du formulaire d'inscription
     $('#inscription-form').on('submit', function(event) {
         event.preventDefault();
     });
 
+    // Gestion du changement de sélection d'habitat
     $('#habitat-select').on('change', function() {
         var habitat = $(this).val();
         window.location.href = habitat + '.html';
     });
 
+    // Gestion des clics sur les étoiles de notation
     const ratingStars = document.querySelectorAll('.rating-star');
     ratingStars.forEach((star) => {
         star.addEventListener('click', () => {
@@ -100,6 +92,7 @@ $(document).ready(function() {
         });
     });
 
+    // Gestion du clic sur le bouton "Envoyer"
     const envoyerBtn = document.getElementById('envoyer-btn');
     envoyerBtn.addEventListener('click', () => {
         const nom = document.getElementById('nom').value;
@@ -110,33 +103,33 @@ $(document).ready(function() {
     });
 });
 
+// Fonction pour ouvrir une page dans un nouvel onglet
 function ouvrirPage(url) {
     window.open(url, '_blank');
 }
 
+// Gestion de l'ouverture de la modale vidéo
 var specialEteButton = document.querySelector('.open-modal-btn');
 specialEteButton.addEventListener('click', function() {
     var modal = document.querySelector('.modal-video');
     modal.classList.add('show');
-var video = document.querySelector('iframe');
+    var video = document.querySelector('iframe');
     video.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
 });
 
+// Gestion du chargement de la vidéo
 var video = document.querySelector('iframe');
-
 video.addEventListener('load', function() {
     console.log('La vidéo est chargée');
-
-video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
 });
 
+// Gestion de la fermeture de la modale vidéo
 var closeButton = document.querySelector('.close-btn');
 closeButton.addEventListener('click', function() {
     console.log('La fenêtre modale est fermée');
-
-var video = document.querySelector('iframe');
+    var video = document.querySelector('iframe');
     video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-
-var modal = document.querySelector('.modal-video');
+    var modal = document.querySelector('.modal-video');
     modal.classList.remove('show');
 });
