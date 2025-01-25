@@ -4,8 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$conn = new mysqli("mysql-zooarcadiaa.alwaysdata.net", "376865", "Marley2809", "zooarcadiaa_zoo");
-
+$conn = new mysqli("localhost", "root", "", "zooarcadiaa_zoo");
 if ($conn->connect_error) {
     die("Échec de la connexion : " . $conn->connect_error);
 }

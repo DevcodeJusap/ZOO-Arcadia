@@ -1,8 +1,9 @@
-/* Styles par défaut pour les appareils de bureau */
+/* Styles généraux */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 10px;
+    font-size: 1em;
 }
 
 .container {
@@ -11,7 +12,7 @@ body {
 }
 
 .header, .footer {
-    padding: 20px;
+    padding: 15px;
     text-align: center;
 }
 
@@ -83,6 +84,51 @@ body {
     }
 }
 
+/* Styles pour les petits écrans */
+@media (max-width: 600px) {
+    body {
+        font-size: 0.9em;
+    }
+
+    .header, .footer {
+        padding: 10px;
+    }
+
+    .content {
+        padding: 5px;
+    }
+}
+
+/* Styles pour les écrans moyens */
+@media (min-width: 601px) and (max-width: 1024px) {
+    body {
+        font-size: 1em;
+    }
+
+    .header, .footer {
+        padding: 15px;
+    }
+
+    .content {
+        padding: 10px;
+    }
+}
+
+/* Styles pour les grands écrans */
+@media (min-width: 1025px) {
+    body {
+        font-size: 1.1em;
+    }
+
+    .header, .footer {
+        padding: 20px;
+    }
+
+    .content {
+        padding: 15px;
+    }
+}
+
 /* Styles pour les orientations paysage */
 @media (orientation: landscape) {
     .header, .footer {
@@ -102,5 +148,93 @@ body {
 
     .header, .footer {
         padding: 25px;
+    }
+}
+
+/* Styles pour les petits écrans */
+@media (max-width: 600px) {
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 10px;
+    }
+
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: auto;
+    }
+
+    nav ul li {
+        margin-bottom: 15px;
+        width: auto;
+    }
+
+    nav .btn-headers {
+        width: auto;
+        text-align: right;
+    }
+
+    nav .login-btn {
+        width: 23%;
+        text-align: center;
+        margin: 209px 30px 0 80px;
+    }
+
+    .accueil-btn {
+        width: 23%;
+        text-align: center;
+    }
+
+    h1.line-title {
+
+        margin-top: 10px;
+        
+    }
+
+    img#logo {
+        margin-top: 40px;
+        margin-left: 30px;
+        height: 200px;
+        width: 200px;
+        
+    }
+
+        
+    
+
+    
+}
+
+
+
+
+/* Styles pour les écrans moyens */
+@media (min-width: 601px) and (max-width: 1024px) {
+    nav {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    nav ul {
+        flex-direction: row;
+    }
+
+    nav ul li {
+        margin-right: 10px;
+    }
+
+    nav .btn-headers {
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+
+    nav .login-btn {
+        margin-top: 0;
     }
 }

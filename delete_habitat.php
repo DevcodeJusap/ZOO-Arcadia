@@ -1,6 +1,6 @@
 <?php
 include 'session_check.php';
-$conn = new mysqli("mysql-zooarcadiaa.alwaysdata.net", "376865", "Marley2809", "zooarcadiaa_zoo");
+$conn = new mysqli("localhost", "root", "", "zooarcadiaa_zoo");
 
 if ($conn->connect_error) {
     die("Échec de la connexion : " . $conn->connect_error);

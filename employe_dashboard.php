@@ -2,8 +2,7 @@
 session_start();
 
 include 'session_check.php';
-$conn = new mysqli("mysql-zooarcadiaa.alwaysdata.net", "376865", "Marley2809", "zooarcadiaa_zoo");
-if ($conn->connect_error) {
+$conn = new mysqli("localhost", "root", "", "zooarcadiaa_zoo");if ($conn->connect_error) {
     die("Connexion échouée: " . $conn->connect_error);
 }
 

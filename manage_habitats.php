@@ -1,7 +1,8 @@
 <?php
+include 'navbar.php';
+include 'nav-vertical.php';
 include 'session_check.php';
-$conn = new mysqli("mysql-zooarcadiaa.alwaysdata.net", "376865", "Marley2809", "zooarcadiaa_zoo");
-
+$conn = new mysqli("localhost", "root", "", "zooarcadiaa_zoo");
 if ($conn->connect_error) {
     die("Échec de la connexion : " . $conn->connect_error);
 }
@@ -39,35 +40,11 @@ $result = $conn->query("SELECT * FROM habitats");
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Gestion des habitats</title>
+        <link rel="stylesheet" href="css/dashboard.css">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-    <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="admin_dashboard.php">Admin Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarResponsive">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="admin_dashboard.php">Tableau de bord</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="manage_employe.php">Gérer les employés</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="manage_animals.php">Gérer les animaux</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="logout.php">Déconnexion</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
+    
 
         <div class="container mt-5">
             <h2>Gestion des habitats</h2>

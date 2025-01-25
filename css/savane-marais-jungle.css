@@ -19,8 +19,8 @@
 .card {
     perspective: 1000px;
     position: relative;
-    width: 300px; 
-    height: 200px; 
+    width: 350px; 
+    height: 250px; 
     margin: 40px auto;
 }
 
@@ -33,6 +33,14 @@
     position: relative; 
 }
 
+.value {
+    color: white;
+}
+
+.animal-info {
+    font-size: 1.5em; /* Ajustez la taille de la police selon vos besoins */
+    text-align: center;
+}
 
 
 .front, .back {
@@ -57,7 +65,7 @@
 
 .card .back {
     transform: rotateY(180deg);
-    color: #ffffff;
+    color: #232323;
     background-color: #d49144;
     padding: 10px; 
     overflow: hidden; 

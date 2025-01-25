@@ -5,34 +5,45 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-Content-Type-Options" content="nosniff">
         <meta http-equiv="X-Frame-Options" content="DENY">
-        <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">        <link rel="icon" type="image/png" href="image/presentation/logo.png">
+        <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+        <meta name="description" content="Zoo-Arcadia, un parc zoologique en Bretagne, engagé dans le bien-être animal et la conservation de la biodiversité.">
+        <meta name="keywords" content="zoo, parc zoologique, Bretagne, bien-être animal, biodiversité">
+        <link rel="icon" type="image" href="image/presentation/logo.webp">
         <title>Zoo-Arcadia - Accueil</title>
+        <link rel="preload" href="css/style.css" as="style">
+        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" as="style">
+        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" as="style">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="css/style.min.css">
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+        </noscript>
+        <script src="javascript/script.min.js" async></script>
     </head>
     <body id="index.html">
         <header class="header">
             <a href="index.html" id="logo-link">
-                <img src="image/presentation/logo.png" alt="Logo Zoo-Arcadia" id="logo" loading="lazy">
+                <img src="image/presentation/logo.webp" alt="Logo de Zoo-Arcadia" id="logo" loading="lazy" width="200" height="100">
             </a>
-            <nav>
+            <nav aria-label="Navigation principale">
                 <ul class="centered">
-                    <li><button class="btn-headers accueil-btn" id="accueil-btn" onclick="location.href='index.html'">Accueil</button></li> 
-                    <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='service.html'">Service</button></li> 
-
-                    <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='habitat.html'">Habitat</button></li> <span></span>
-                    <li><button class="btn-headers contact-btn" id="contact-btn" onclick="location.href='contact.html'">Contact</button></li> <span></span>
+                    <li><button class="btn-headers accueil-btn" id="accueil-btn" onclick="location.href='index.html'" aria-label="Aller à l'accueil">Accueil</button></li> 
+                    <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='service.html'" aria-label="Aller à la page des services">Service</button></li> 
+                    <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='habitat.html'" aria-label="Aller à la page des habitats">Habitat</button></li> 
+                    <li><button class="btn-headers contact-btn" id="contact-btn" onclick="location.href='contact.html'" aria-label="Aller à la page de contact">Contact</button></li> 
                 </ul>
-                
-                <button class="btn-headers login-btn" id="login-btn" onclick="location.href='login.html'" style="float: right;">login</button> <span></span>
+                <button class="btn-headers login-btn" id="login-btn" onclick="location.href='login.html'" style="float: right;" aria-label="Aller à la page de connexion">login</button>
             </nav>
         </header>
         <main>
             <section  class="hero">
                 <h1 class="line-title">Bienvenue au  Zoo-Arcadia</h1>
                 <div class="owl-carousel custom-carousel owl-theme" id="swiper-accueil">
-                    <div class="item" style="background-image: url(image/presentation/Design\ sans\ titre\ \(7\).png); height: 906px;" loading="lazy">
+                    <div class="item" style="background-image: url(image/presentation/Design\ sans\ titre\ \(7\).webp); height: 906px;" loading="lazy">
                     </div>
                     <div class="item" style="background-image: url(image/habitats/Design\ sans\ titre\ \(38\).webp); height: 906px;" loading="lazy">
                     </div>
@@ -44,37 +55,37 @@
             </section>
             <section class="game-section">
                 <div class="owl-carousel custom-carousel owl-theme">
-                    <div class="item inactive" style="background-image: url(image/habitats/Design\ sans\ titre\ \(18\).webp);" loading="lazy">
+                    <div class="item" style="background-image: url(image/habitats/Design\ sans\ titre\ \(18\).webp);" loading="lazy" aria-label="Dorry le gorille">
                         <div class="item-desc">
                             <h3>Dorry...</h3>
                             <p>Dorry le gorille ! Préparez-vous, car Dorry n'est pas un gorille ordinaire. Non, non, non ! C'est un vrai clown de la jungle ! Dorry n'est pas seulement un gorille amusant, il est aussi un super-héros de la nature ! En mangeant des fruits et des feuilles, il aide à garder la forêt en bonne santé.</p>
                         </div>
                     </div>
-                    <div class="item" style="background-image: url(image/habitats/Design\ sans\ titre\ \(19\).webp);" loading="lazy">
+                    <div class="item" style="background-image: url(image/habitats/Design\ sans\ titre\ \(19\).webp);" loading="lazy" aria-label="Marley le lion">
                         <div class="item-desc">
                             <h3>Marley...</h3>
                             <p>Marley le lion ! Le roi de la savane qui a du style et un sens de l'humour à toute épreuve ! Marley vit dans une grande troupe de lions, mais il est le chef incontesté. Avec son rugissement puissant, il fait savoir à tout le monde qui est le patron. Mais ne vous y trompez pas, il est aussi très protecteur envers sa famille.</p>
                         </div>
                     </div>
-                    <div class="item" style="background-image: url(image/savane/elephant-7036431_1280.jpg);" loading="lazy">
+                    <div class="item" style="background-image: url(image/savane/elephant-7036431_1280.webp);" loading="lazy" aria-label="Léo le petit éléphant">
                         <div class="item-desc">
                             <h3>Léo...</h3>
                             <p>Léo le petit Éléphant. Le joyeux Trompetteur de la savane !!! Léo est curieux, toujours prêt pour l'aventure, avec un cœur aussi grand que son corps ! Il passe ses journées à explorer la savane, à jouer dans les rivières et à apprendre des choses nouvelles. Léo est toujours le premier à proposer des jeux, et il est connu pour ses blagues qui font rire tout le monde.</p>
                         </div>
                     </div>
-                    <div class="item" style="background-image: url(image/savane/giraffe-2222908_1280.jpg);" loading="lazy">
+                    <div class="item" style="background-image: url(image/savane/giraffe-2222908_1280.webp);" loading="lazy" aria-label="Girafe">
                         <div class="item-desc">
                             <h3>Giraffe...</h3>
                             <p>Description de la girafe.</p>
                         </div>
                     </div>
-                    <div class="item" style="background-image: url(image/marais/iguana-1654234_1280.jpg);" loading="lazy">
+                    <div class="item" style="background-image: url(image/marais/iguana-1654234_1280.webp);" loading="lazy" aria-label="Karl l'iguane">
                         <div class="item-desc">
                             <h3>Karl...</h3>
                             <p>Karl vit dans une communauté d'iguanes où chacun a sa place. Il aime partager des histoires avec ses amis iguanes et leur apprendre à se camoufler et à grimper. Bien qu'il soit un peu paresseux, il sait toujours quand il est temps de se rassembler pour une bonne fête au soleil !</p>
                         </div>
                     </div>
-                    <div class="item" style="background-image: url(image/marais/Crocodile.png);" loading="lazy">
+                    <div class="item" style="background-image: url(image/marais/Crocodile.webp);" loading="lazy" aria-label="Dann le crocodile">
                         <div class="item-desc">
                             <h3>Dann...</h3>
                             <p> Dann le crocodile ! Préparez-vous à découvrir le crocodile le plus drôle et le plus charismatique de la rivière ! Il passe ses journées à se prélasser au soleil, à chasser des poissons et à jouer avec ses amis. Quand il n'est pas en train de faire des blagues !!! </p>
@@ -83,13 +94,16 @@
                 </div>
             </section>
 
-                <div class="offre">
-                    <button class="open-modal-btn">Spéciale ETE 2024</button>
+            <div class="offre">
+                <button id="openModalBtn" type="button" class="open-modal-btn" onclick="openModal()" aria-label="Ouvrir la modal Spéciale ETE 2024">Spéciale ETE 2024</button>
+            </div>
+            <div id="modalVideo" class="modal-video">
+                <div class="modal-content">
+                    <button class="close-btn" onclick="closeModal()" onkeydown="if(event.key === 'Enter' || event.key === ' ') closeModal()" aria-label="Fermer la modal">&times;</button>
+                    <iframe id="videoFrame" src="video sans titre.mp4" title="Zoo-Arcadia Video" allowfullscreen loading="lazy"></iframe>
                 </div>
-                <div class="modal-video">
-                    <iframe src="video/video_sans_titre.mp4" frameborder="0" allowfullscreen></iframe>
-                    <button class="close-btn">×</button>
-                </div>
+            </div>
+
 
             <section class="section2">
                 <h2>Zoo-Arcadia à été fondé en 1960,</h2>
@@ -177,15 +191,47 @@
                         <ul class="list-unstyled">
                             <li>Adresse : Zoo-Arcadia, Route de Brocéliande, 35300 Rennes, France</li>
                             <li>Téléphone : 02 99 99 99 99</li>
-                            <li>Email : contact@zoo-arcadia.fr</li>
+                            <li>Email : <a href="mailto:contact@zoo-arcadia.fr" aria-label="Envoyer un email à contact@zoo-arcadia.fr">contact@zoo-arcadia.fr</a></li>
                         </ul>
                     </div>
                 </div>
-                <p class="copyright text-muted">&copy; 2024 Zoo-Arcadia. Tous droits réservés. Créé par <a href="https://codelinky.com">C@deLinky</a></p>
+                <p class="copyright text-muted">&copy; 2024 Zoo-Arcadia. Tous droits réservés. Créé par <a href="https://codelinky.com" target="_blank" rel="noopener noreferrer" aria-label="Visiter le site de C@deLinky">C@deLinky</a></p>
             </div>
         </footer>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <script src="javascript/script.js"></script>
+        <script>
+            fetch('track_visitors.php')
+                .then(response => response.text())
+                .then(data => {
+                    console.log('Visite enregistrée');
+                    document.getElementById('status').innerText = 'Visite enregistrée';
+                })
+                .catch(error => console.error('Erreur:', error));
+
+            // Fonction pour ouvrir le modal
+            function openModal() {
+                document.getElementById('modalVideo').style.display = 'block';
+                var videoFrame = document.getElementById('videoFrame');
+                videoFrame.src += "?autoplay=1";
+            }
+
+            // Fonction pour fermer le modal
+            function closeModal() {
+                document.getElementById('modalVideo').style.display = 'none';
+                var videoFrame = document.getElementById('videoFrame');
+                videoFrame.src = videoFrame.src.replace("?autoplay=1", "");
+            }
+
+            // Fermer le modal si l'utilisateur clique en dehors du contenu
+            window.onclick = function(event) {
+                var modal = document.getElementById("modalVideo");
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+        <div id="status" aria-live="polite" style="visibility: hidden;"></div>
     </body>
 </html>
