@@ -9,6 +9,11 @@ img {
     max-width: 100%;
     border: 0;
 }
+
+.owl-nav {
+    display: none;
+}
+
 ul,
 ol {
     list-style: none;
@@ -275,80 +280,39 @@ h3 {
     transform: translateX(50%);
     transition: transform 0.5s ease-in-out;
 }
-/* Styles par défaut pour les appareils de bureau */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-.container {
-    width: 80%;
-    margin: 0 auto;
-}
-.header, .footer {
-    padding: 20px;
-    text-align: center;
-}
-.menu {
-    display: block;
-}
-.mobile-menu {
-    display: none;
-}
-.navbar {
+
+.carousel-avis .item {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 10px;
-    background-color: #333;
+    background: #fff; /* Définir le fond en blanc */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    min-height: 250px; /* Définir une hauteur minimale */
+    height: 100%; /* Ajuster automatiquement la hauteur */
+    color: #000; /* Définir la couleur du texte en noir pour contraste */
 }
-.navbar button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
+
+.carousel-avis .avis-content {
+    margin-bottom: 10px;
+    color: #000; /* Définir la couleur du texte en noir pour contraste */
 }
-.navbar button:hover {
-    background-color: #45a049;
+
+.carousel-avis .rating i {
+    color: #FFD700; /* Couleur des étoiles */
 }
-/* Styles pour les tablettes et téléphones */
-@media (max-width: 768px) {
-    .menu {
-        display: none;
-    }
-    .mobile-menu {
-        display: block;
-        background-color: #333;
-        width: 100%;
-    }
-    .mobile-menu button {
-        display: block;
-        width: 100%;
-        text-align: left;
-        padding: 10px;
-        border-bottom: 1px solid #444;
-    }
-    .mobile-menu button:hover {
-        background-color: #45a049;
-    }
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .navbar .toggle-menu {
-        display: block;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-size: 16px;
-        width: 100%;
-        text-align: left;
-    }
-    .navbar .toggle-menu:hover {
-        background-color: #45a049;
-    }
+
+.carousel-avis {
+    margin-top: 20px; /* Ajustez cette valeur selon vos besoins */
+}
+
+.carousel-avis .owl-stage-outer {
+    height: auto; /* Ajuster automatiquement la hauteur */
+}
+
+.owl-dots {
+    display: none;
 }

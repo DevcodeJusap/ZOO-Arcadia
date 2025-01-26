@@ -216,17 +216,19 @@ body {
 
 /* Styles pour les écrans moyens */
 @media (min-width: 601px) and (max-width: 1024px) {
-    nav {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
+ 
     nav ul {
         flex-direction: row;
+        padding: 0; /* Assurez-vous qu'il n'y a pas de padding */
     }
 
     nav ul li {
-        margin-right: 10px;
+        margin-right: 5px; /* Réduction de l'espacement */
+        padding: 0; /* Assurez-vous qu'il n'y a pas de padding */
+    }
+
+    nav ul li:last-child {
+        margin-right: 0; /* Pas de marge pour le dernier élément */
     }
 
     nav .btn-headers {
@@ -236,5 +238,6 @@ body {
 
     nav .login-btn {
         margin-top: 0;
+        width: 10%;
     }
 }

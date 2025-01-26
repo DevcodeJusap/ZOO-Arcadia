@@ -114,7 +114,7 @@
             const message = document.getElementById('message').value;
 
             // Envoyer le message au serveur
-            fetch('save_message.php', {
+            fetch('/php/save_message.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -138,5 +138,6 @@
             });
         });
     </script>
+    <script src="javascript/script.js"></script>
 </body>
 </html>

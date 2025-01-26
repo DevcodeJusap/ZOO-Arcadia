@@ -15,33 +15,36 @@ $(document).ready(function() {
     });
 
     // Initialisation des autres carrousels
-    const initCarousel = () => {
+    function initCarousel() {
         console.log("Initialisation de la carrousel");
         $(".custom-carousel").owlCarousel({
             autoWidth: true,
             loop: true
         });
-    };
+    }
 
-    const initAvisCarousel = () => {
-        console.log("Initialisation de la carrousel d'avis");
-        $('.carousel-avis').owlCarousel({
+    // Fonction pour initialiser le carrousel des avis
+    function initAvisCarousel() {
+        $('#carousel-avis').owlCarousel({
             loop: true,
             margin: 10,
             nav: true,
-            autoplay: true,
-            autoplayTimeout: 8000,
-            autoplayHoverPause: false,
             responsive: {
-                0: { items: 1 },
-                600: { items: 2 },
-                1000: { items: 3 }
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 5
+                }
             }
         });
-    };
+    }
 
     // Gestion des clics sur les éléments du carrousel
-    const handleCarouselItemClick = () => {
+    function handleCarouselItemClick() {
         $(".custom-carousel .item").click(function() {
             const currentItem = $(this);
             const otherItems = $(".custom-carousel .item").not(currentItem);
@@ -49,19 +52,18 @@ $(document).ready(function() {
             currentItem.toggleClass("active");
             currentItem.removeClass("inactive");
         });
-    };
+    }
 
     // Gestion des clics sur le bouton "Déposer un avis"
-    const handleAvisBtnClick = () => {
+    function handleAvisBtnClick() {
         $(".avis-btn").click(function() {
             console.log("Clic sur le bouton Déposer un avis");
             window.location.href = "avis.html";
         });
-    };
+    }
 
     // Initialisation des carrousels et gestion des événements
     initCarousel();
-    initAvisCarousel();
     handleCarouselItemClick();
     handleAvisBtnClick();
 
@@ -132,4 +134,63 @@ closeButton.addEventListener('click', function() {
     video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
     var modal = document.querySelector('.modal-video');
     modal.classList.remove('show');
+});
+
+// Fonction pour fermer le modal
+function closeModal() {
+    var modalVideo = document.getElementById('modalVideo');
+    if (modalVideo) {
+        modalVideo.style.display = 'none';
+    }
+    var videoFrame = document.getElementById('videoFrame');
+    if (videoFrame) {
+        videoFrame.src = videoFrame.src.replace("?autoplay=1", "");
+    }
+}
+
+// Fermer le modal si l'utilisateur clique en dehors du contenu
+window.onclick = function(event) {
+    var modal = document.getElementById("modalVideo");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    initCarousel();
+    initAvisCarousel();
+    handleCarouselItemClick();
+    handleAvisBtnClick();
+
+    // Gestion du formulaire d'inscription
+    $('#inscription-form').on('submit', function(event) {
+        event.preventDefault();
+    });
+
+    // Gestion du changement de sélection d'habitat
+    $('#habitat-select').on('change', function() {
+        var habitat = $(this).val();
+        window.location.href = habitat + '.html';
+    });
+
+    var videoFrame = document.getElementById('videoFrame');
+    if (videoFrame) {
+        videoFrame.src += "?autoplay=1";
+    }
+
+    // Gestion des clics sur les étoiles de notation
+    const ratingStars = document.querySelectorAll('.rating-star');
+    ratingStars.forEach((star) => {
+        star.addEventListener('click', () => {
+            const rating = star.getAttribute('data-rating');
+            console.log(`Note : ${rating}`);
+            ratingStars.forEach((s) => {
+                if (s.getAttribute('data-rating') <= rating) {
+                    s.setAttribute('checked', true);
+                } else {
+                    s.removeAttribute('checked');
+                }
+            });
+        });
+    });
 });

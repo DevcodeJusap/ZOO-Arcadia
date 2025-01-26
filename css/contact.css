@@ -1,15 +1,19 @@
-
 @import 'responsive.css';
 @import 'global.css';
 @import 'header.css';
 @import 'footer.css';
-@import 'style.css';
+@import'style.css';
 
 
-body, html {
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
 }
 
 canvas {
@@ -19,13 +23,15 @@ canvas {
     z-index: -1;
 }
 
+main {
+    flex: 1;
+}
 
 label {
     display: block;
     margin-bottom: 10px;
     color: #000; 
 }
-
 
 input[type="text"], input[type="email"], textarea {
     width: 95%;
@@ -49,7 +55,7 @@ input[type="submit"] {
     margin: 0 auto; 
 }
 
-input[type="submit"]:hover{
-    background-color: #3e8e41 ;
+input[type="submit"]:hover {
+    background-color: #3e8e41;
 }
 

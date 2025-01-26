@@ -30,7 +30,8 @@
         <form class="registration-form" action="submit_registration.php" method="POST" >
             <input type="text" name="name" placeholder="Nom" required>
             <input type="email" name="email" placeholder="Email" required>
-            <select name="role">
+            <label for="role">Rôle:</label>
+            <select name="role" id="role">
                 <option value="employe">Employé</option>
                 <option value="veterinaire">Vétérinaire</option>
             </select>

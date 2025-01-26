@@ -86,3 +86,60 @@ footer .copyright {
     margin-top: 10px;
     color: #999;
 }
+
+footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px 0;
+    flex-shrink: 0;
+}
+
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+}
+
+footer .container .row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+footer .container .row div {
+    flex: 1;
+    margin: 0 10px;
+}
+
+footer .container .row div h3 {
+    margin-bottom: 10px;
+}
+
+footer .container .row div p,
+footer .container .row div ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+footer .container .row div ul li {
+    margin-bottom: 10px;
+}
+
+footer .container .row div ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer .container .row div ul li a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    text-align: center;
+    margin: 0;
+}

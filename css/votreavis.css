@@ -1,4 +1,3 @@
-
 @import 'responsive.css';
 @import 'global.css';
 @import 'header.css';
@@ -24,8 +23,6 @@ h1 {
     margin-bottom: 10px;
     padding-bottom: 20px;
     background-image: linear-gradient(to right, #471d09, #945f1afd, #dada0c, #00aeff, #0000ff);
-    background-clip: text;
-    -webkit-background-clip: text;
     color: transparent;
     font-size: 50px;
     line-height: 40px;
@@ -33,7 +30,6 @@ h1 {
     position: relative;
     text-transform: capitalize;
     text-align: center; 
-    margin: 0 auto;
     display: block;
     
 }
@@ -59,17 +55,15 @@ h1 {
     color: #000; 
     width: 95%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     border-radius: 5px;
     resize: none;
     border: 1px solid #ccc;
-    color: #000;
 }
 
 /* Styles pour le bouton d'envoi */
 .avis-input button {
     padding: 10px 20px;
-    margin-top: 20px;
     background-color: #af984c; 
     color: white; 
     border: none; 
@@ -81,37 +75,35 @@ h1 {
     text-align: center;
 }
 
-
-
-
 .avis-input button:hover {
     background-color: #45a049;
 }
+
 .avis-input button:active {
     background-color: #3e8e41;
 }
 
-
-/* Styles pour les étoiles de notation */
-.rating-star {
-    font-size: 3em;
-    cursor: pointer;
-    color: #ccc;
-
-}
-
-.rating-star.selected {
-    color: #ffc60a;
-}
-
 /* Styles pour les étoiles de notation au survol */
-
 .rating-star:hover {
     color: #ffc60a;
 }
 
+.rating-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 5px; /* Ajustez la marge selon vos besoins */
+}
 
+.rating-star {
+    font-size: 4rem; /* Ajustez la taille des étoiles selon vos besoins */
+    cursor: pointer;
+    color: #ccc; /* Couleur des étoiles non sélectionnées */
+    margin: 5px 5px; 
 
+    
+}
 
-
-
+.rating-star.selected {
+    color: #f39c12; /* Couleur des étoiles sélectionnées */
+}
