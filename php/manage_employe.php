@@ -35,30 +35,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!empty($_POST['password'])) {
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             // Mets à jour le mot de passe
-        } else {
-            // Ne change pas le mot de passe si le champ est vide
-        }
-
-        if ($id && $name && $username && $position && $role && $email) {
             $stmt = $conn->prepare("UPDATE employe SET name = ?, username = ?, password = ?, position = ?, role = ?, habitat_name = ?, email = ? WHERE id = ?");
             $stmt->bind_param("sssssssi", $name, $username, $password, $position, $role, $habitat, $email, $id);
-            $stmt->execute();
-            $stmt->close();
         } else {
-            echo "Veuillez remplir tous les champs.";
+            // Ne change pas le mot de passe si le champ est vide
+            $stmt = $conn->prepare("UPDATE employe SET name = ?, username = ?, position = ?, role = ?, habitat_name = ?, email = ? WHERE id = ?");
+            $stmt->bind_param("ssssssi", $name, $username, $position, $role, $habitat, $email, $id);
         }
+
+        $stmt->execute();
+        $stmt->close();
     } else {
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $password = $_POST['password'];
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $position = filter_input(INPUT_POST, 'position', FILTER_SANITIZE_SPECIAL_CHARS);
         $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_SPECIAL_CHARS);
         $habitat = filter_input(INPUT_POST, 'habitat', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        if ($name && $username && $password && $position && $role && $email) {
+        if ($name && $username && $hashed_password && $position && $role && $email) {
             $stmt = $conn->prepare("INSERT INTO employe (name, username, password, position, role, habitat_name, email) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssss", $name, $username, $password, $position, $role, $habitat, $email);
+            $stmt->bind_param("sssssss", $name, $username, $hashed_password, $position, $role, $habitat, $email);
             $stmt->execute();
             $stmt->close();
         } else {
@@ -67,7 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-$result = $conn->query("SELECT id, name, username, password, position, role, habitat_name, email FROM employe");
+// Affichage des demandes d'inscription
+$requests = $conn->query("SELECT id, name, email, role FROM registration_requests");
 ?>
 
 <!DOCTYPE html>
@@ -159,6 +159,12 @@ $result = $conn->query("SELECT id, name, username, password, position, role, hab
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
+                            <?php
+                            if (empty($_SESSION['csrf_token'])) {
+                                $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+                            }
+                            ?>
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <button type="submit" class="btn btn-primary">Ajouter</button>
                         </form>
                     </div>
@@ -221,6 +227,48 @@ $result = $conn->query("SELECT id, name, username, password, position, role, hab
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Demandes d'inscription -->
+        <div class="card mt-4">
+            <div class="card-header">Demandes d'inscription en attente</div>
+            <div class="card-body">
+                <?php if ($requests->num_rows > 0): ?>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Rôle</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php while ($req = $requests->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($req['name']); ?></td>
+                                <td><?php echo htmlspecialchars($req['email']); ?></td>
+                                <td><?php echo htmlspecialchars($req['role']); ?></td>
+                                <td>
+                                    <form method="post" action="approve_registration.php" style="display:inline;">
+                                        <input type="hidden" name="request_id" value="<?php echo $req['id']; ?>">
+                                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                        <button type="submit" class="btn btn-success btn-sm">Approuver</button>
+                                    </form>
+                                    <form method="post" action="process_request.php" style="display:inline;">
+                                        <input type="hidden" name="action" value="reject">
+                                        <input type="hidden" name="id" value="<?php echo $req['id']; ?>">
+                                        <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <div class="alert alert-info">Aucune demande d'inscription en attente.</div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

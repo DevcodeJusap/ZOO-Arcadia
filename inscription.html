@@ -27,14 +27,15 @@
     <main>
         <h1>Inscrivez-vous</h1>
         <p style="text-align: center;">Veuillez remplir le formulaire d'inscription :</p>
-        <form class="registration-form" action="submit_registration.php" method="POST" >
+        <form method="post" action="php/submit_registration.php">
             <input type="text" name="name" placeholder="Nom" required>
             <input type="email" name="email" placeholder="Email" required>
-            <label for="role">Rôle:</label>
-            <select name="role" id="role">
+            <select name="role" id="role" required>
                 <option value="employe">Employé</option>
                 <option value="veterinaire">Vétérinaire</option>
             </select>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <input type="hidden" name="csrf_token" id="csrf_token">
             <div class="button-container">
                 <button type="submit">S'inscrire</button>
             </div>
@@ -71,5 +72,12 @@
             <p class="copyright text-muted">&copy; 2024 Zoo-Arcadia. Tous droits réservés. Créé par <a href="https://codelinky.com">C@deLinky</a></p>
         </div>
     </footer>
+    <script>
+fetch('php/csrf_token.php')
+  .then(response => response.text())
+  .then(token => {
+    document.getElementById('csrf_token').value = token;
+  });
+</script>
     </body>
 </html>

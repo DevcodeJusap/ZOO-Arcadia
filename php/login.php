@@ -18,21 +18,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
     if ($username && $password) {
-        $stmt = $conn->prepare("SELECT username, role, habitat_name FROM employe WHERE username=? AND password=?");
+        $stmt = $conn->prepare("SELECT username, password, role, habitat_name FROM employe WHERE username=?");
         if ($stmt === false) {
             die("Erreur de préparation de la requête : " . $conn->error);
         }
-        $stmt->bind_param("ss", $username, $password);
+        $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
         $stmt->close();
 
-        if ($user) {
-            session_start();
+        if ($user && password_verify($password, $user['password'])) {
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $user['role'];
-            $_SESSION['habitat'] = $user['habitat_name']; // <-- C'est bien habitat_name ici !
+            $_SESSION['habitat'] = $user['habitat_name'];
 
             if ($user['role'] === 'admin') {
                 header('Location: admin_dashboard.php');

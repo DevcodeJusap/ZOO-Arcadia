@@ -15,9 +15,7 @@ if ($conn->connect_error) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
+    
 
     if (isset($_POST['action']) && $_POST['action'] === 'reject' && isset($_POST['id'])) {
         $id = $_POST['id'];
@@ -32,9 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
-            echo "Success";
+            header("Location: manage_employe.php?msg=refus_ok");
+            exit();
         } else {
-            echo "Error: No rows affected. ID may not exist.";
+            echo "Erreur : Aucun enregistrement supprimé.";
         }
 
         $stmt->close();
