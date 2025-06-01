@@ -1,6 +1,10 @@
 <?php
 include 'session_check.php';
-$conn = new mysqli("localhost", "root", "", "zooarcadiaa_zoo");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "zooarcadiaa_zoo";
+$conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Échec de la connexion : " . $conn->connect_error);
 }
@@ -17,9 +21,26 @@ if (isset($_GET['id'])) {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $habitat_name = filter_input(INPUT_POST, 'habitat_name', FILTER_SANITIZE_SPECIAL_CHARS);
+        $description = $conn->real_escape_string($_POST['habitatDescription']);
+        $image_url = '';
 
-        $stmt = $conn->prepare("UPDATE habitats SET habitat_name=? WHERE id=?");
-        $stmt->bind_param("si", $habitat_name, $id);
+        if (isset($_FILES['habitatImage']) && $_FILES['habitatImage']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = '../image/habitats/';
+            $fileName = basename($_FILES['habitatImage']['name']);
+            $fileName = str_replace(' ', '_', $fileName);
+            $targetFile = $uploadDir . $fileName;
+            if (move_uploaded_file($_FILES['habitatImage']['tmp_name'], $targetFile)) {
+                $image_url = 'image/habitats/' . $fileName;
+            }
+        }
+
+        if ($image_url) {
+            $stmt = $conn->prepare("UPDATE habitats SET habitat_name=?, description=?, image_url=? WHERE id=?");
+            $stmt->bind_param("sssi", $habitat_name, $description, $image_url, $id);
+        } else {
+            $stmt = $conn->prepare("UPDATE habitats SET habitat_name=?, description=? WHERE id=?");
+            $stmt->bind_param("ssi", $habitat_name, $description, $id);
+        }
         $stmt->execute();
         $stmt->close();
 
@@ -45,10 +66,18 @@ $conn->close();
 <body>
 <div class="container mt-5">
     <h2>Modifier un habitat</h2>
-    <form action="edit_habitat.php?id=<?php echo $id; ?>" method="POST">
+    <form action="edit_habitat.php?id=<?php echo $id; ?>" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="habitat_name">Nom de l'habitat</label>
             <input type="text" class="form-control" id="habitat_name" name="habitat_name" value="<?php echo $habitat['habitat_name']; ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="habitatDescription">Description de l'habitat</label>
+            <textarea class="form-control" id="habitatDescription" name="habitatDescription" required><?php echo $habitat['description']; ?></textarea>
+        </div>
+        <div class="form-group">
+            <label for="habitatImage">Image de l'habitat</label>
+            <input type="file" class="form-control-file" id="habitatImage" name="habitatImage">
         </div>
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
     </form>

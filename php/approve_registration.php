@@ -38,12 +38,12 @@ $stmt->bind_param("sss", $name, $email, $role);
 if ($stmt->execute()) {
     $sql = "DELETE FROM registration_requests WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    if (!$stmt) {
-        die("Erreur de préparation de la requête : " . $conn->error);
-    }
-    $stmt->bind_param("i", $request_id);
-    $stmt->execute();
-    echo "Demande approuvée et employé ajouté !";
+        if (!$stmt) {
+            die("Erreur de préparation de la requête : " . $conn->error);
+        }
+        $stmt->bind_param("i", $request_id);
+        $stmt->execute();
+        echo "Demande approuvée et employé ajouté !";
 } else {
     echo "Erreur lors de l'insertion dans employees : " . $stmt->error;
 }

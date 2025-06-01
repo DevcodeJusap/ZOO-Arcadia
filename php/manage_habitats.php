@@ -31,13 +31,7 @@ if (!$result_messages) {
     die("Erreur dans la requête SQL pour les messages : " . $conn->error);
 }
 
-// Récupérer les habitats
-$sql_habitats = "SELECT * FROM habitats";
-$result_habitats = $conn->query($sql_habitats);
 
-if (!$result_habitats) {
-    die("Erreur dans la requête SQL pour les habitats : " . $conn->error);
-}
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +63,7 @@ if (!$result_habitats) {
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a href="index.php" class="btn btn-danger">Déconnexion</a>
+            <a href="/php/logout.php" class="btn btn-danger">Déconnexion</a>
             <img src="\image\presentation\logo.webp" alt="Logo" style="height: 100px;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -130,6 +124,10 @@ if (!$result_habitats) {
                             <label for="habitatDescription">Description</label>
                             <textarea class="form-control" id="habitatDescription" name="habitatDescription" required></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="habitatImage">Image de l'habitat</label>
+                            <input type="file" class="form-control" id="habitatImage" name="habitatImage" accept="image/*">
+                        </div>
                         <button type="submit" class="btn btn-primary">Enregistrer</button>
                     </form>
                 </div>
@@ -142,16 +140,30 @@ if (!$result_habitats) {
             <div class="col-md-8">
                 <div class="info-block" id="habitats-list">
                     <?php
-                    $sql_habitats = "SELECT * FROM habitats";
+                    $sql_habitats = "SELECT h.*, 
+    (SELECT COUNT(*) FROM animals a WHERE a.habitat_name = h.habitat_name) AS nb_animaux
+    FROM habitats h";
                     $result_habitats = $conn->query($sql_habitats);
 
                     if ($result_habitats->num_rows > 0) {
                         while($row = $result_habitats->fetch_assoc()) {
                             echo "<div class='habitat-block'>";
-                            echo "<h3>" . htmlspecialchars($row['name']) . "</h3>";
-                            echo "<p>" . htmlspecialchars($row['description']) . "</p>";
+                            if (!empty($row['image_url'])) {
+                                echo "<img src='/" . htmlspecialchars(ltrim($row['image_url'], '/')) . "' alt='Image habitat' style='max-width:120px;max-height:80px;display:block;margin-bottom:8px;'>";
+                            }
+                            echo "<h3>" . htmlspecialchars($row['habitat_name']) . "</h3>";
+                            echo "<p>" . (isset($row['description']) ? htmlspecialchars($row['description']) : '') . "</p>";
+                            echo "<p><strong>Nombre d'animaux :</strong> " . $row['nb_animaux'] . "</p>";
+                            echo "<button class='btn btn-danger btn-sm delete-habitat-btn' data-id='" . $row['id'] . "'>Supprimer</button>";
+                            echo "<button class='btn btn-warning btn-sm edit-habitat-btn' 
+                                    data-id='" . $row['id'] . "'
+                                    data-name='" . htmlspecialchars($row['habitat_name'], ENT_QUOTES) . "'
+                                    data-description='" . htmlspecialchars($row['description'], ENT_QUOTES) . "'
+                                    data-image='" . htmlspecialchars($row['image_url'], ENT_QUOTES) . "'>
+                                    Modifier
+                                  </button>";
                             echo "</div>";
-                            echo "<hr>"; // Ajout de la ligne horizontale pour séparer les habitats
+                            echo "<hr>";
                         }
                     } else {
                         echo "<p>Aucun habitat trouvé.</p>";
@@ -171,7 +183,10 @@ if (!$result_habitats) {
                         </thead>
                         <tbody>
                             <?php
-                            $sql_animals = "SELECT animal_name, likes FROM animals";
+                            $sql_animals = "SELECT animals.animal_name, IFNULL(animal_likes.likes, 0) AS likes
+                                            FROM animals
+                                            LEFT JOIN animal_likes ON animals.id = animal_likes.id
+                                            ORDER BY likes DESC";
                             $result_animals = $conn->query($sql_animals);
 
                             if ($result_animals->num_rows > 0) {
@@ -208,6 +223,41 @@ if (!$result_habitats) {
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Modal de modification d'habitat -->
+    <div class="modal fade" id="editHabitatModal" tabindex="-1" role="dialog" aria-labelledby="editHabitatModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form id="editHabitatForm" enctype="multipart/form-data">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editHabitatModalLabel">Modifier l'habitat</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="editHabitatId" name="id">
+              <div class="form-group">
+                <label for="editHabitatName">Nom de l'Habitat</label>
+                <input type="text" class="form-control" id="editHabitatName" name="habitatName" required>
+              </div>
+              <div class="form-group">
+                <label for="editHabitatDescription">Description</label>
+                <textarea class="form-control" id="editHabitatDescription" name="habitatDescription" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="editHabitatImage">Image de l'habitat</label>
+                <input type="file" class="form-control" id="editHabitatImage" name="habitatImage" accept="image/*">
+                <img id="currentHabitatImage" src="" alt="Image actuelle" style="max-width:120px;max-height:80px;margin-top:8px;">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -296,6 +346,63 @@ if (!$result_habitats) {
 
         // Appeler la fonction une fois au chargement de la page
         updateSections();
+    });
+    </script>
+    <script>
+    $(document).on('click', '.delete-habitat-btn', function() {
+        if(confirm("Voulez-vous vraiment supprimer cet habitat ?")) {
+            var habitatId = $(this).data('id');
+            var btn = $(this);
+            $.ajax({
+                url: 'delete_habitat.php',
+                type: 'POST',
+                data: { id: habitatId },
+                success: function(response) {
+                    if(response.trim() === "success") {
+                        btn.closest('.habitat-block').remove();
+                    } else {
+                        alert("Erreur lors de la suppression.");
+                    }
+                },
+                error: function() {
+                    alert("Erreur AJAX.");
+                }
+            });
+        }
+    });
+    </script>
+    <script>
+    $(document).on('click', '.edit-habitat-btn', function() {
+        $('#editHabitatId').val($(this).data('id'));
+        $('#editHabitatName').val($(this).data('name'));
+        $('#editHabitatDescription').val($(this).data('description'));
+        var img = $(this).data('image');
+        if(img) {
+            $('#currentHabitatImage').attr('src', '/' + img.replace(/^\/+/, ''));
+            $('#currentHabitatImage').show();
+        } else {
+            $('#currentHabitatImage').hide();
+        }
+        $('#editHabitatModal').modal('show');
+    });
+
+    $('#editHabitatForm').on('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: 'edit_habitat.php',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                alert('Habitat modifié avec succès !');
+                location.reload();
+            },
+            error: function() {
+                alert('Erreur lors de la modification de l\'habitat.');
+            }
+        });
     });
     </script>
 </body>

@@ -27,14 +27,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
         $position = filter_input(INPUT_POST, 'position', FILTER_SANITIZE_SPECIAL_CHARS);
         $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_SPECIAL_CHARS);
         $habitat = filter_input(INPUT_POST, 'habitat', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        if ($id && $name && $username && $password && $position && $role && $email) {
-            $stmt = $conn->prepare("UPDATE employe SET name = ?, username = ?, password = ?, position = ?, role = ?, habitat = ?, email = ? WHERE id = ?");
+        if (!empty($_POST['password'])) {
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            // Mets à jour le mot de passe
+        } else {
+            // Ne change pas le mot de passe si le champ est vide
+        }
+
+        if ($id && $name && $username && $position && $role && $email) {
+            $stmt = $conn->prepare("UPDATE employe SET name = ?, username = ?, password = ?, position = ?, role = ?, habitat_name = ?, email = ? WHERE id = ?");
             $stmt->bind_param("sssssssi", $name, $username, $password, $position, $role, $habitat, $email, $id);
             $stmt->execute();
             $stmt->close();
@@ -44,14 +50,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $position = filter_input(INPUT_POST, 'position', FILTER_SANITIZE_SPECIAL_CHARS);
         $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_SPECIAL_CHARS);
         $habitat = filter_input(INPUT_POST, 'habitat', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
 
         if ($name && $username && $password && $position && $role && $email) {
-            $stmt = $conn->prepare("INSERT INTO employe (name, username, password, position, role, habitat, email) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO employe (name, username, password, position, role, habitat_name, email) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("sssssss", $name, $username, $password, $position, $role, $habitat, $email);
             $stmt->execute();
             $stmt->close();
@@ -61,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-$result = $conn->query("SELECT id, name, username, password, position, role, habitat, email FROM employe");
+$result = $conn->query("SELECT id, name, username, password, position, role, habitat_name, email FROM employe");
 ?>
 
 <!DOCTYPE html>
@@ -73,27 +79,12 @@ $result = $conn->query("SELECT id, name, username, password, position, role, hab
     <link rel="stylesheet" href="\css\dashboard.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            function fetchData() {
-                $.ajax({
-                    url: 'fetch_data.php',
-                    method: 'GET',
-                    success: function(data) {
-                        $('#data-table').html(data);
-                    }
-                });
-            }
-            fetchData();
-            setInterval(fetchData, 5000); // Rafraîchit toutes les 5 secondes
-        });
-    </script>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a href="index.php" class="btn btn-danger">Déconnexion</a>
+            <a href="/php/logout.php" class="btn btn-danger">Déconnexion</a>
             <img src="\image\presentation\logo.webp" alt="Logo" style="height: 100px;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -123,105 +114,120 @@ $result = $conn->query("SELECT id, name, username, password, position, role, hab
         </div>
     </nav>
 
-    <div class="container">
-        <h1>Gestion des employés</h1>
-        <div class="card">
-            <div class="card-header">
-                Ajouter un employé
+    <div class="container my-4">
+        <h1 class="text-center mb-4">Gestion des employés</h1>
+        <div class="row">
+            <div class="col-12 col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-header">Ajouter un employé</div>
+                    <div class="card-body">
+                        <form method="post" action="">
+                            <div class="form-group">
+                                <label for="name">Nom</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Nom d'utilisateur</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Mot de passe</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="position">Poste</label>
+                                <input type="text" class="form-control" id="position" name="position" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Rôle</label>
+                                <select class="form-control" id="role" name="role" required>
+                                    <option value="admin">Admin</option>
+                                    <option value="veterinaire">Vétérinaire</option>
+                                    <option value="employe">Employé</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="habitat">Habitat (pour les employés)</label>
+                                <select class="form-control" id="habitat" name="habitat">
+                                    <option value="">Aucun</option>
+                                    <option value="savane">Savane</option>
+                                    <option value="jungle">Jungle</option>
+                                    <option value="marais">Marais</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <form method="post" action="">
-                    <div class="form-group">
-                        <label for="name">Nom</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+            <div class="col-12 col-lg-6">
+                <div class="card">
+                    <div class="card-header">Liste des employés</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nom de l'employé</th>
+                                        <th>Nom d'utilisateur</th>
+                                        <th>Mot de passe</th>
+                                        <th>Poste</th>
+                                        <th>Rôle</th>
+                                        <th>Habitat</th>
+                                        <th>Email</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $result = $conn->query("SELECT id, name, username, password, position, role, habitat_name, email FROM employe");
+                                    while ($row = $result->fetch_assoc()):
+                                    ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['username']); ?></td>
+                                        <td>••••••••</td>
+                                        <td><?php echo htmlspecialchars($row['position']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['role']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['habitat_name'] ?? '') !== '' ? htmlspecialchars($row['habitat_name']) : 'Aucun'; ?></td>
+                                        <td><?php echo htmlspecialchars($row['email']); ?></td>
+                                        <td>
+                                            <form method="post" action="" style="display:inline;">
+                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                                <button type="submit" name="delete" class="btn btn-danger">Supprimer</button>
+                                            </form>
+                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal"
+                                                data-id="<?php echo $row['id']; ?>"
+                                                data-name="<?php echo $row['name']; ?>"
+                                                data-username="<?php echo $row['username']; ?>"
+                                                data-password="<?php echo $row['password']; ?>"
+                                                data-position="<?php echo $row['position']; ?>"
+                                                data-role="<?php echo $row['role']; ?>"
+                                                data-habitat="<?php echo $row['habitat_name']; ?>"
+                                                data-email="<?php echo $row['email']; ?>">
+                                                Modifier
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php endwhile; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="username">Nom d'utilisateur</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="position">Poste</label>
-                        <input type="text" class="form-control" id="position" name="position" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="role">Rôle</label>
-                        <select class="form-control" id="role" name="role" required>
-                            <option value="admin">Admin</option>
-                            <option value="veterinaire">Vétérinaire</option>
-                            <option value="employe">Employé</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="habitat">Habitat (pour les employés)</label>
-                        <select class="form-control" id="habitat" name="habitat">
-                            <option value="">Aucun</option>
-                            <option value="savane">Savane</option>
-                            <option value="jungle">Jungle</option>
-                            <option value="marais">Marais</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Ajouter</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="card mt-3">
-            <div class="card-header">
-                Liste des employés
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nom de l'employé</th>
-                            <th>Nom d'utilisateur</th>
-                            <th>Mot de passe</th>
-                            <th>Poste</th>
-                            <th>Rôle</th>
-                            <th>Habitat</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $result = $conn->query("SELECT id, name, username, password, position, role, habitat, email FROM employe");
-                        while ($row = $result->fetch_assoc()):
-                        ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['id']); ?></td>
-                            <td><?php echo htmlspecialchars($row['name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['username']); ?></td>
-                            <td><?php echo htmlspecialchars($row['password']); ?></td>
-                            <td><?php echo htmlspecialchars($row['position']); ?></td>
-                            <td><?php echo htmlspecialchars($row['role']); ?></td>
-                            <td><?php echo htmlspecialchars($row['habitat']); ?></td>
-                            <td>
-                                <form method="post" action="" style="display:inline;">
-                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                    <button type="submit" name="delete" class="btn btn-danger">Supprimer</button>
-                                </form>
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal" data-id="<?php echo $row['id']; ?>" data-name="<?php echo $row['name']; ?>" data-username="<?php echo $row['username']; ?>" data-password="<?php echo $row['password']; ?>" data-position="<?php echo $row['position']; ?>" data-role="<?php echo $row['role']; ?>" data-habitat="<?php echo $row['habitat']; ?>" data-email="<?php echo $row['email']; ?>">Modifier</button>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalLabel">Modifier l'employé</h5>
@@ -242,7 +248,7 @@ $result = $conn->query("SELECT id, name, username, password, position, role, hab
                         </div>
                         <div class="form-group">
                             <label for="edit-password">Mot de passe</label>
-                            <input type="password" class="form-control" id="edit-password" name="password" required>
+                            <input type="password" class="form-control" id="edit-password" name="password" placeholder="Nouveau mot de passe">
                         </div>
                         <div class="form-group">
                             <label for="edit-position">Poste</label>
@@ -295,7 +301,7 @@ $result = $conn->query("SELECT id, name, username, password, position, role, hab
             modal.find('#edit-id').val(id);
             modal.find('#edit-name').val(name);
             modal.find('#edit-username').val(username);
-            modal.find('#edit-password').val(password);
+            modal.find('#edit-password').val('');
             modal.find('#edit-position').val(position);
             modal.find('#edit-role').val(role);
             modal.find('#edit-habitat').val(habitat);

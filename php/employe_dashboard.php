@@ -1,5 +1,13 @@
 <?php
 session_start();
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+if (!isset($_SESSION['username']) || empty($_SESSION['role'])) {
+    header('Location: /login.html');
+    exit();
+}
 
 include 'session_check.php';
 $conn = new mysqli("localhost", "root", "", "zooarcadiaa_zoo");
@@ -41,7 +49,8 @@ $sql_avis = "SELECT * FROM avis WHERE status = 'en attente'";
 $result_avis = $conn->query($sql_avis);
 
 // Récupérer les animaux de la savane
-$sql_animals = "SELECT id, image_url, animal_name FROM animals WHERE habitat_name = 'savane'";
+$habitat = $conn->real_escape_string($_SESSION['habitat']);
+$sql_animals = "SELECT id, image_url, animal_name, species, age, weight, food, food_quantity, last_meal, health_comment, private_comment FROM animals WHERE habitat_name = '$habitat'";
 $result_animals = $conn->query($sql_animals);
 
 ?>
@@ -112,7 +121,7 @@ $result_animals = $conn->query($sql_animals);
         </section>
 
         <section class="animals-modif">
-            <h2>Animaux dans la savane</h2>
+            <h2>Animaux</h2>
             <?php
             if ($result_animals->num_rows > 0) {
                 echo '<table class="table">';
@@ -120,14 +129,30 @@ $result_animals = $conn->query($sql_animals);
                 echo '<tr>';
                 echo '<th>Photo</th>';
                 echo '<th>Nom</th>';
+                echo '<th>Espèce</th>';
+                echo '<th>Âge</th>';
+                echo '<th>Poids</th>';
+                echo '<th>Nourriture</th>';
+                echo '<th>Quantité</th>';
+                echo '<th>Dernier repas</th>';
+                echo '<th>Commentaire santé</th>';
+                echo '<th>Commentaire privé</th>';
                 echo '<th>Action</th>';
                 echo '</tr>';
                 echo '</thead>';
                 echo '<tbody>';
                 while($row = $result_animals->fetch_assoc()) {
                     echo '<tr>';
-                    echo '<td><img src="' . $row['image_url'] . '" alt="' . $row['animal_name'] . '" style="width:100px;height:auto;"></td>';
-                    echo '<td>' . $row['animal_name'] . '</td>';
+                    echo '<td><img src="/' . $row['image_url'] . '" alt="' . htmlspecialchars($row['animal_name']) . '" style="width:100px;height:auto;"></td>';
+                    echo '<td>' . htmlspecialchars($row['animal_name']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['species']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['age']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['weight']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['food']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['food_quantity']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['last_meal']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['health_comment']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['private_comment']) . '</td>';
                     echo '<td>';
                     echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editAnimalModal" data-id="' . $row['id'] . '">Modifier</button>';
                     echo '</td>';
@@ -155,19 +180,11 @@ $result_animals = $conn->query($sql_animals);
                         <form id="editAnimalForm">
                             <input type="hidden" id="animal_id" name="id">
                             <div class="form-group">
-                                <label for="animal_weight">Poids (kg)</label>
-                                <input type="number" class="form-control" id="animal_weight" name="weight" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="animal_food">Nourriture</label>
-                                <input type="text" class="form-control" id="animal_food" name="food" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="food_quantity">Quantité (kg)</label>
                                 <input type="number" class="form-control" id="food_quantity" name="food_quantity" required>
                             </div>
                             <div class="form-group">
-                                <label for="last_meal">Date et Heure</label>
+                                <label for="last_meal">Date et Heure du dernier repas</label>
                                 <input type="datetime-local" class="form-control" id="last_meal" name="last_meal" required>
                             </div>
                             <div class="form-group">

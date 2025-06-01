@@ -103,7 +103,7 @@ $result = $conn->query($sql);
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a href="index.php" class="btn btn-danger">Déconnexion</a>
+            <a href="/php/logout.php" class="btn btn-danger">Déconnexion</a>
             <img src="\image\presentation\logo.webp" alt="Logo" style="height: 100px;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -294,7 +294,8 @@ $result = $conn->query($sql);
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         if (!empty($row['image_url'])) {
-                            echo "<td><img src='" . htmlspecialchars($row['image_url']) . "' alt='Photo de " . htmlspecialchars($row['animal_name']) . "' style='height: 100px;'></td>";
+                            $imagePath = '/' . ltrim($row['image_url'], '/');
+                            echo "<td><img src='" . htmlspecialchars($imagePath) . "' alt='Photo de " . htmlspecialchars($row['animal_name']) . "' style='height: 100px;'></td>";
                         } else {
                             echo "<td>Aucune image</td>";
                         }

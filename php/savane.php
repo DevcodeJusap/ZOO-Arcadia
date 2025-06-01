@@ -4,7 +4,7 @@ if ($conn->connect_error) {
     die("Échec de la connexion : " . $conn->connect_error);
 }
 
-$result = $conn->query("SELECT * FROM animals WHERE habitat_name='Savane'");
+$result = $conn->query("SELECT * FROM animals WHERE habitat_name='La Savane'");
 if (!$result) {
     die("Erreur lors de l'exécution de la requête : " . $conn->error);
 }
@@ -31,11 +31,11 @@ if (!$result) {
         <nav>
             <ul class="centered">
                 <li><button class="btn-headers accueil-btn" id="accueil-btn" onclick="location.href='/index.html'">Accueil</button><div class="box"></div></li> 
-                <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='/service.html'">Service</button></li> <span></span>
-                <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='/habitat.html'">Habitat</button></li> <span></span>
+                <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='/service.php'">Service</button></li> <span></span>
+                <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='/habitat.php'">Habitat</button></li> <span></span>
                 <li><button class="btn-headers contact-btn" id="contact-btn" onclick="location.href='/contact.html'">Contact</button></li> <span></span>
             </ul>
-            <button class="btn-headers login-btn" id="login-btn" onclick="location.href='/login.html'" style="float: right;">login</button> <span></span>
+            <button class="btn-headers login-btn" id="login-btn" onclick="location.href='/login.html'" style="float: right;">login</button>
         </nav>
     </header>
 
@@ -49,21 +49,27 @@ if (!$result) {
                         <div class="card">
                             <div class="front">
                                 <?php
-                                $imagePath = "" . htmlspecialchars($row['image_url']);
+                                $imagePath = '/' . ltrim($row['image_url'] ?? '', '/');
                                 ?>
-                                <img src="<?php echo $imagePath; ?>" alt="Savane">
+                                <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Savane">
                             </div>
                             <div class="back">
-                            <h4 class="animal-info" id="animal_name_<?php echo $row['id']; ?>"> <span class="value"><?php echo htmlspecialchars($row['animal_name']); ?></span></h4><br>                               
-                                <p id="species_<?php echo $row['id']; ?>"><strong>Espèce :</strong> <span class="value"><?php echo htmlspecialchars($row['species']); ?></span></p>
-                                <p id="age_<?php echo $row['id']; ?>"><strong>Âge :</strong> <span class="value"><?php echo htmlspecialchars($row['age']); ?></span></p>
-                                <p id="weight_<?php echo $row['id']; ?>"><strong>Poids (en Kg) :</strong> <span class="value"><?php echo htmlspecialchars($row['weight']); ?></span></p>
-                                <p id="food_<?php echo $row['id']; ?>"><strong>Nourriture :</strong> <span class="value"><?php echo htmlspecialchars($row['food']); ?></span></p>
-                                <p id="last_meal_<?php echo $row['id']; ?>"><strong>Dernier repas :</strong> <span class="value"><?php echo htmlspecialchars($row['last_meal']); ?></span></p>
-                                <p id="food_quantity_<?php echo $row['id']; ?>"><strong>Quantité de nourriture :</strong> <span class="value"><?php echo htmlspecialchars($row['food_quantity']); ?></span></p>
+                                <h4 class="animal-info" id="animal_name_<?php echo $row['id']; ?>">
+                                    <span class="value"><?php echo htmlspecialchars($row['animal_name'] ?? ''); ?></span>
+                                </h4><br>
+                                <p id="species_<?php echo $row['id']; ?>"><strong>Espèce :</strong> <span class="value"><?php echo htmlspecialchars($row['species'] ?? ''); ?></span></p>
+                                <p id="age_<?php echo $row['id']; ?>"><strong>Âge :</strong> <span class="value"><?php echo htmlspecialchars($row['age'] ?? ''); ?></span></p>
+                                <p id="weight_<?php echo $row['id']; ?>"><strong>Poids (en Kg) :</strong> <span class="value"><?php echo htmlspecialchars($row['weight'] ?? ''); ?></span></p>
+                                <p id="food_<?php echo $row['id']; ?>"><strong>Nourriture :</strong> <span class="value"><?php echo htmlspecialchars($row['food'] ?? ''); ?></span></p>
+                                <p id="last_meal_<?php echo $row['id']; ?>"><strong>Dernier repas :</strong> <span class="value"><?php echo htmlspecialchars($row['last_meal'] ?? ''); ?></span></p>
+                                <p id="food_quantity_<?php echo $row['id']; ?>"><strong>Quantité de nourriture :</strong> <span class="value"><?php echo htmlspecialchars($row['food_quantity'] ?? ''); ?></span></p>
                                 <div class="likes-container"><br>
-                                    <button type="button" class="heart-btn" id="heart-<?php echo $row['id']; ?>" onclick="likeAnimal(<?php echo $row['id']; ?>)" title="Like Animal <?php echo $row['id']; ?>"><i class="fas fa-heart"></i></button>
-                                    <span id="likes-<?php echo $row['id']; ?>" class="likes-counter" data-animal-id="<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['likes']); ?></span> likes
+                                    <button type="button" class="heart-btn" onclick="likeAnimal(<?php echo $row['id']; ?>)">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                    <span id="likes-<?php echo $row['id']; ?>" class="likes" data-animal-id="<?php echo $row['id']; ?>">
+                                        <?php echo htmlspecialchars(isset($row['likes']) && $row['likes'] !== null ? $row['likes'] : 0); ?>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +83,6 @@ if (!$result) {
         <div style="text-align: center; margin-top: 20px;">
             <a href="/habitat.html" class="btn retoure">Retour</a>
         </div>
-
     </main>
     <footer>
         <div class="container">
@@ -111,22 +116,41 @@ if (!$result) {
     </footer>
 
     <script>
+        // Empêche de liker plusieurs fois le même animal (par navigateur)
         function likeAnimal(animalId) {
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "update_likes.php", true);
+            // Vérifie si l'utilisateur a déjà liké cet animal
+            let likedAnimals = JSON.parse(localStorage.getItem('likedAnimals') || '{}');
+            if (likedAnimals[animalId]) {
+                alert("Vous avez déjà liké cet animal.");
+                return;
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/php/update_likes.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
             xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.success) {
-                        const likesCounter = document.getElementById("likes-" + animalId);
-                        likesCounter.textContent = response.new_likes;
-                    } else {
-                        console.error("Erreur lors de la mise à jour des likes");
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    try {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            var likesElement = document.getElementById("likes-" + animalId);
+                            if (likesElement) {
+                                likesElement.innerText = response.new_likes;
+                            }
+                            // Marque comme liké dans le localStorage
+                            likedAnimals[animalId] = true;
+                            localStorage.setItem('likedAnimals', JSON.stringify(likedAnimals));
+                        } else {
+                            alert(response.message || "Erreur lors de l'ajout du like.");
+                        }
+                    } catch (e) {
+                        alert("Erreur serveur ou session expirée.");
                     }
                 }
             };
-            xhr.send("animal_id=" + animalId);
+
+            xhr.send("animal_id=" + encodeURIComponent(animalId));
         }
     </script>
 </body>

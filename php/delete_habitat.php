@@ -2,15 +2,24 @@
 include 'session_check.php';
 include 'db_connection.php';
 
-$habitatId = $_POST['habitatId'];
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "zooarcadiaa_zoo";
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
 
-$query = "DELETE FROM habitats WHERE id='$habitatId'";
-
-if (mysqli_query($conn, $query)) {
-    echo "Success";
-} else {
-    echo "Error: " . mysqli_error($conn);
+if (isset($_POST['id'])) {
+    $id = intval($_POST['id']);
+    $sql = "DELETE FROM habitats WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    if ($stmt->execute()) {
+        echo "success";
+    } else {
+        echo "error";
+    }
+    $stmt->close();
 }
-
-mysqli_close($conn);
+$conn->close();
 ?>

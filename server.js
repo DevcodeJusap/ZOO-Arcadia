@@ -1,4 +1,5 @@
-// ...existing code...
+const express = require('express');
+const app = express();
 
 // API route to add a new review
 app.post('/api/reviews', async (req, res) => {

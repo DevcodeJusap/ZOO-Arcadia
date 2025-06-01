@@ -3,7 +3,10 @@ include 'db_connection.php';
 
 $conn = OpenCon();
 
-$sql = "SELECT id, animal_name, likes FROM animals ORDER BY likes DESC";
+$sql = "SELECT animals.id, animals.animal_name, IFNULL(animal_likes.likes, 0) AS likes
+        FROM animals
+        LEFT JOIN animal_likes ON animals.id = animal_likes.id
+        ORDER BY likes DESC";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

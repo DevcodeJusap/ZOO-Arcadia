@@ -23,26 +23,6 @@ $(document).ready(function() {
         });
     }
 
-    // Fonction pour initialiser le carrousel des avis
-    function initAvisCarousel() {
-        $('#carousel-avis').owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 3
-                },
-                1000: {
-                    items: 5
-                }
-            }
-        });
-    }
-
     // Gestion des clics sur les éléments du carrousel
     function handleCarouselItemClick() {
         $(".custom-carousel .item").click(function() {
@@ -74,7 +54,7 @@ $(document).ready(function() {
 
     // Gestion du changement de sélection d'habitat
     $('#habitat-select').on('change', function() {
-        var habitat = $(this).val();
+        let habitat = $(this).val();
         window.location.href = habitat + '.html';
     });
 
@@ -99,7 +79,7 @@ $(document).ready(function() {
     envoyerBtn.addEventListener('click', () => {
         const nom = document.getElementById('nom').value;
         const avis = document.getElementById('avis').value;
-        const rating = document.querySelector('.rating-star:checked').getAttribute('data-rating');
+        const rating = document.querySelector('.rating-star[checked]').getAttribute('data-rating');
 
         console.log(`Nom : ${nom}, Avis : ${avis}, Note : ${rating}`);
     });
@@ -111,54 +91,35 @@ function ouvrirPage(url) {
 }
 
 // Gestion de l'ouverture de la modale vidéo
-var specialEteButton = document.querySelector('.open-modal-btn');
+let specialEteButton = document.querySelector('.open-modal-btn');
 specialEteButton.addEventListener('click', function() {
-    var modal = document.querySelector('.modal-video');
+    let modal = document.querySelector('.modal-video');
     modal.classList.add('show');
-    var video = document.querySelector('iframe');
-    video.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    let video = document.querySelector('iframe');
+    video.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', 'https://www.youtube.com');
 });
 
 // Gestion du chargement de la vidéo
-var video = document.querySelector('iframe');
+let video = document.querySelector('iframe');
 video.addEventListener('load', function() {
     console.log('La vidéo est chargée');
-    video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', 'https://www.youtube.com');
 });
 
 // Gestion de la fermeture de la modale vidéo
-var closeButton = document.querySelector('.close-btn');
+let closeButton = document.querySelector('.close-btn');
 closeButton.addEventListener('click', function() {
     console.log('La fenêtre modale est fermée');
-    var video = document.querySelector('iframe');
-    video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-    var modal = document.querySelector('.modal-video');
+    let video = document.querySelector('iframe');
+    video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', 'https://www.youtube.com');
+    let modal = document.querySelector('.modal-video');
     modal.classList.remove('show');
 });
 
-// Fonction pour fermer le modal
-function closeModal() {
-    var modalVideo = document.getElementById('modalVideo');
-    if (modalVideo) {
-        modalVideo.style.display = 'none';
-    }
-    var videoFrame = document.getElementById('videoFrame');
-    if (videoFrame) {
-        videoFrame.src = videoFrame.src.replace("?autoplay=1", "");
-    }
-}
 
-// Fermer le modal si l'utilisateur clique en dehors du contenu
-window.onclick = function(event) {
-    var modal = document.getElementById("modalVideo");
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-};
 
 document.addEventListener('DOMContentLoaded', function() {
     initCarousel();
-    initAvisCarousel();
     handleCarouselItemClick();
     handleAvisBtnClick();
 
@@ -169,11 +130,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Gestion du changement de sélection d'habitat
     $('#habitat-select').on('change', function() {
-        var habitat = $(this).val();
+        let habitat = $(this).val();
         window.location.href = habitat + '.html';
     });
 
-    var videoFrame = document.getElementById('videoFrame');
+    let videoFrame = document.getElementById('videoFrame');
     if (videoFrame) {
         videoFrame.src += "?autoplay=1";
     }
@@ -194,3 +155,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+

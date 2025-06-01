@@ -59,7 +59,7 @@ $result = $conn->query($sql);
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a href="logout.php" class="btn btn-danger">Déconnexion</a>
+            <a href="/php/logout.php" class="btn btn-danger">Déconnexion</a>
             <img src="\image\presentation\logo.webp" alt="Logo" style="height: 100px;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

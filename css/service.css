@@ -1,4 +1,3 @@
-
 @import 'header.css';
 @import 'footer.css';
 
@@ -52,6 +51,14 @@ p {
     object-fit: cover;
     border-radius: 5%;
     margin-left: 20px; 
+}
+
+.service-photo.droite {
+    height: 250px;    /* Par exemple, augmente la valeur selon ton besoin */
+    object-fit: cover;
+    width: auto;      /* ou width: 100% si tu veux qu'elles prennent toute la largeur */
+    max-width: 100%;
+    border-radius: 10px; /* optionnel pour un effet arrondi */
 }
 
 .service.owl-carousel {
@@ -119,5 +126,9 @@ p {
     width: 120px; 
     height: 90px;
     margin-left: 20px; 
+}
+
+.service-paragraphes > .service\.owl-carousel {
+    margin-bottom: 20px;
 }
 

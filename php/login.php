@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
     if ($username && $password) {
-        $stmt = $conn->prepare("SELECT * FROM employe WHERE username=? AND password=?");
+        $stmt = $conn->prepare("SELECT username, role, habitat_name FROM employe WHERE username=? AND password=?");
         if ($stmt === false) {
             die("Erreur de préparation de la requête : " . $conn->error);
         }
@@ -29,21 +29,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
 
         if ($user) {
-            $_SESSION['username'] = $user['username'];
+            session_start();
+            $_SESSION['username'] = $username;
             $_SESSION['role'] = $user['role'];
-            $_SESSION['habitat'] = $user['habitat'];
+            $_SESSION['habitat'] = $user['habitat_name']; // <-- C'est bien habitat_name ici !
 
             if ($user['role'] === 'admin') {
-                header("Location: admin_dashboard.php");
+                header('Location: admin_dashboard.php');
                 exit();
-            } elseif ($user['role'] === 'veterinaire') {
-                header("Location: veto_dashboard.php");
-                exit();
-            } elseif ($user['role'] === 'employe') {
-                header("Location: employe_dashboard.php");
+            } elseif ($user['role'] === 'vétérinaire' || $user['role'] === 'veterinaire') {
+                header('Location: vet_dashboard.php');
                 exit();
             } else {
-                echo "Rôle inconnu.";
+                header('Location: employe_dashboard.php');
+                exit();
             }
         } else {
             echo "Nom d'utilisateur ou mot de passe incorrect.";

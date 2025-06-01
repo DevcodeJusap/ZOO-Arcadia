@@ -1,4 +1,16 @@
 <?php
+session_start();
+if ($_SESSION['role'] === 'admin') {
+    header("Location: manage_animals.php");
+} elseif ($_SESSION['role'] === 'vétérinaire' || $_SESSION['role'] === 'veterinaire') {
+    header("Location: vet_dashboard.php");
+} else {
+    header("Location: employe_dashboard.php");
+}
+exit();
+?>
+
+<?php
 include 'session_check.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

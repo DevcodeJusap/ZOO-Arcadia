@@ -1,3 +1,22 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "zooarcadiaa_zoo";
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) { die("Erreur connexion : " . $conn->connect_error); }
+
+$habitats = [];
+$sql = "SELECT habitat_name, description, image_url FROM habitats";
+$result = $conn->query($sql);
+while ($row = $result->fetch_assoc()) {
+    $habitats[$row['habitat_name']] = [
+        'description' => $row['description'],
+        'image_url' => $row['image_url']
+    ];
+}
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -19,8 +38,8 @@
         <nav>
             <ul class="centered">
                 <li><button class="btn-headers accueil-btn" id="accueil-btn" onclick="location.href='index.html'">Accueil</button></li>
-                <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='service.html'">Service</button></li>
-                <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='habitat.html'" style="background-color: #af964c; color: #fff;">Habitat</button></li>
+                <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='service.php'">Service</button></li>
+                <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='habitat.php'" style="background-color: #af964c; color: #fff;">Habitat</button></li>
                 <li><button class="btn-headers contact-btn" id="contact-btn" onclick="location.href='contact.html'">Contact</button></li>
             </ul>
             <button class="btn-headers login-btn" id="login-btn" onclick="location.href='login.html'" style="float: right;">login</button> <span></span>
@@ -29,14 +48,17 @@
     <main>
         <h1>Nos habitats</h1>
         <p style="text-align: center;">Le Zoo-Arcadia abrite une grande variété d'habitats pour les animaux :</p>
-        
 
         <!-- Section Savane -->
         <section class="habitat savane">
-            <div class="image-fond" style="background-image: url('image/habitats/Savane.webp');"loading="lazy">
+            <div class="image-fond" style="background-image: url('<?php
+                $img = $habitats['La Savane']['image_url'] ?? '';
+                $img = str_replace('\\', '/', $img); // Corrige les antislashs
+                echo '/' . ltrim(htmlspecialchars($img), '/');
+            ?>');" loading="lazy">
                 <div class="description">
                     <h2 class="savane-color">Savane</h2>
-                    <p>La savane est un habitat caractérisé par des plaines herbeuses et des arbres épars. Vous pouvez y voir des animaux tels que les lions, les éléphants et les girafes.</p>
+                    <p><?php echo htmlspecialchars($habitats['La Savane']['description'] ?? ''); ?></p>
                     <div>
                         <button class="btn-headers btn-habitat" onclick="location.href='/php/savane.php'">Visiter</button>
                     </div>
@@ -46,10 +68,14 @@
 
         <!-- Section Marais -->
         <section class="habitat marais">
-            <div class="image-fond" style="background-image: url('image/habitats/Marais.webp');"loading="lazy">
+            <div class="image-fond" style="background-image: url('<?php
+                $img = $habitats['La Marais']['image_url'] ?? '';
+                $img = str_replace('\\', '/', $img);
+                echo '/' . ltrim(htmlspecialchars($img), '/');
+            ?>');" loading="lazy">
                 <div class="description">
                     <h2 class="marais-color">Marais</h2>
-                    <p>Le marais est un habitat caractérisé par des zones humides et des végétaux aquatiques. Vous pouvez y voir des animaux tels que les alligators, les grenouilles et les poissons.</p>
+                    <p><?php echo htmlspecialchars($habitats['La Marais']['description'] ?? ''); ?></p>
                     <div>
                         <button class="btn-headers btn-habitat" onclick="location.href='/php/marais.php'">Visiter</button>
                     </div>
@@ -59,10 +85,14 @@
 
         <!-- Section Jungle -->
         <section class="habitat jungle">
-            <div class="image-fond" style="background-image: url('image/habitats/Jungle.webp');"loading="lazy">
+            <div class="image-fond" style="background-image: url('<?php
+                $img = $habitats['La Jungle']['image_url'] ?? '';
+                $img = str_replace('\\', '/', $img); // Corrige les antislashs
+                echo '/' . ltrim(htmlspecialchars($img), '/');
+            ?>');" loading="lazy">
                 <div class="description">
                     <h2 class="jungle-color">Jungle</h2>
-                    <p>La jungle est un habitat caractérisé par des forêts denses et des végétaux luxuriants. Vous pouvez y voir des animaux tels que les singes, les oiseaux et les reptiles.</p>
+                    <p><?php echo htmlspecialchars($habitats['La Jungle']['description'] ?? ''); ?></p>
                     <div>
                         <button class="btn-headers btn-habitat" onclick="location.href='/php/jungle.php'">Visiter</button>
                     </div>

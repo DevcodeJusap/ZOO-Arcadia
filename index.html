@@ -30,8 +30,8 @@
         <nav aria-label="Navigation principale">
             <ul class="centered">
                 <li><button class="btn-headers accueil-btn" id="accueil-btn" onclick="location.href='index.html'" aria-label="Aller à l'accueil">Accueil</button></li> 
-                <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='service.html'" aria-label="Aller à la page des services">Service</button></li> 
-                <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='habitat.html'" aria-label="Aller à la page des habitats">Habitat</button></li> 
+                <li><button class="btn-headers service-btn" id="service-btn" onclick="location.href='service.php'" aria-label="Aller à la page des services">Service</button></li> 
+                <li><button class="btn-headers habitat-btn" id="habitat-btn" onclick="location.href='habitat.php'" aria-label="Aller à la page des habitats">Habitat</button></li> 
                 <li><button class="btn-headers contact-btn" id="contact-btn" onclick="location.href='contact.html'" aria-label="Aller à la page de contact">Contact</button></li> 
             </ul>
             <button class="btn-headers login-btn" id="login-btn" onclick="location.href='login.html'" style="float: right;" aria-label="Aller à la page de connexion">login</button>
@@ -89,14 +89,16 @@
         </section>
 
         <div class="offre">
-            <button id="openModalBtn" type="button" class="open-modal-btn" onclick="openModal()" aria-label="Ouvrir la modal Spéciale ETE 2024">Spéciale ETE 2024</button>
+            <button id="specialEteBtn" class="yellow-button">Offre ETE 2025</button>
         </div>
-        <div id="videoModal" class="modal">
-            <div id="modalVideo" class="modal-video">
-                <div class="modal-content">
-                    <button class="close-btn" onclick="closeModal()" onkeydown="if(event.key === 'Enter' || event.key === ' ') closeModal()" aria-label="Fermer la modal">&times;</button>
-                    <iframe id="videoFrame" src="video sans titre.mp4" title="Zoo-Arcadia Video" allowfullscreen loading="lazy"></iframe>
-                </div>
+        
+        <!-- Modal -->
+        <div id="specialEteModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <video id="specialEteVideo" class="modal-video" controls>
+                    <source src="video sans titre.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
 
@@ -118,7 +120,7 @@
             <div class="container">
                 <h2 id="avis">Avis de nos visiteurs</h2>
                 <div class="carousel-avis owl-carousel owl-theme" id="carousel-avis">
-                    <!-- Les avis seront générés ici par JavaScript -->
+                    
                 </div>
             </div>
         </section>
@@ -167,35 +169,37 @@
                 })
                 .catch(error => console.error('Erreur:', error));
 
-            // Fonction pour ouvrir le modal
-            function openModal() {
-                document.getElementById('modalVideo').style.display = 'block';
-                var videoFrame = document.getElementById('videoFrame');
-                videoFrame.src += "?autoplay=1";
-            }
+        // Get the modal
+        var modal = document.getElementById("specialEteModal");
 
-            // Fonction pour fermer le modal
-            function closeModal() {
-                document.getElementById('modalVideo').style.display = 'none';
-                var videoFrame = document.getElementById('videoFrame');
-                videoFrame.src = ""; // Réinitialiser la source de l'iframe
-                videoFrame.src = "video sans titre.mp4"; // Remettre la source initiale
-            }
+        // Get the button that opens the modal
+        var btn = document.getElementById("specialEteBtn");
 
-            // Fermer le modal si l'utilisateur clique en dehors du contenu
-            window.onclick = function(event) {
-                var modal = document.getElementById("modalVideo");
-                if (event.target == modal) {
-                    closeModal();
-                }
-            }
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
 
-            var closeModalButton = document.getElementById('closeModal');
-            if (closeModalButton) {
-                closeModalButton.addEventListener('click', function() {
-                    closeModal();
-                });
+        // Get the video element
+        var video = document.getElementById("specialEteVideo");
+
+        // When the user clicks the button, open the modal and play the video
+        btn.onclick = function() {
+            modal.style.display = "block";
+            video.play();
+        }
+
+        // When the user clicks on <span> (x), close the modal and pause the video
+        span.onclick = function() {
+            modal.style.display = "none";
+            video.pause();
+        }
+
+        // When the user clicks anywhere outside of the modal, close it and pause the video
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                video.pause();
             }
+        }
 
             // Charger les avis validés depuis la base de données
             function loadAvis() {

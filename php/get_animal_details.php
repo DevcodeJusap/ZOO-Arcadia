@@ -12,8 +12,14 @@ if ($conn->connect_error) {
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $animalId = intval($_GET['id']);
-    $sql = "SELECT * FROM animals WHERE id = $animalId";
-    $result = $conn->query($sql);
+    $sql = "SELECT animals.*, IFNULL(animal_likes.likes, 0) AS likes
+            FROM animals
+            LEFT JOIN animal_likes ON animals.id = animal_likes.id
+            WHERE animals.id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $animalId);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -25,7 +31,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         echo "<p>Commentaire privé: " . htmlspecialchars($row['private_comment']) . "</p>";
         echo "<p>Likes: " . htmlspecialchars($row['likes']) . "</p>";
         if (!empty($row['image_url'])) {
-            echo "<img src='" . htmlspecialchars($row['image_url']) . "' alt='Photo de " . htmlspecialchars($row['animal_name']) . "' style='width: 100%; height: auto;'>";
+            $imagePath = '/' . ltrim($row['image_url'], '/');
+            echo "<img src='" . htmlspecialchars($imagePath) . "' alt='Photo de " . htmlspecialchars($row['animal_name']) . "' style='width: 100%; height: auto;'>";
         } else {
             echo "<p>Aucune image disponible</p>";
         }

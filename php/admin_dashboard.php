@@ -1,5 +1,14 @@
 <?php
 session_start();
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+if (!isset($_SESSION['username']) || empty($_SESSION['role'])) {
+    header('Location: /login.html');
+    exit();
+}
+
 include 'session_check.php';
 
 $servername = "localhost";
@@ -13,11 +22,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Enregistrement de la visite
+$conn->query("INSERT INTO visitors (visit_date) VALUES (NOW())");
+
 // Modifiez la requête SQL en fonction des colonnes existantes dans votre table 'animals'
-$sql = "SELECT animals.id, animals.animal_name, animals.species, animals.age, animals.weight, animals.food_quantity, animals.private_comment, animals.unité_nourriture, COALESCE(animal_likes.likes, 0) AS likes, animals.image_url
+$sql = "SELECT animals.id, animals.animal_name, animal_likes.likes
         FROM animals
-        LEFT JOIN animal_likes ON animals.id = animal_likes.id
-        ORDER BY likes DESC";
+        LEFT JOIN animal_likes ON animals.id = animal_likes.id";
 $result = $conn->query($sql);
 
 if (!$result) {
@@ -31,6 +42,10 @@ $result_messages = $conn->query($sql_messages);
 if (!$result_messages) {
     die("Erreur dans la requête SQL pour les messages : " . $conn->error);
 }
+
+// Récupérer les avis en attente de validation
+$sql_avis = "SELECT id, nom, avis, titre, note FROM avis WHERE status IS NULL OR status = '' OR status = 'en attente'";
+$result_avis = $conn->query($sql_avis);
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +56,7 @@ if (!$result_messages) {
     <title>Tableau de bord - Zoo-Arcadia</title>
     <link rel="stylesheet" href="\css\dashboard.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -67,7 +83,7 @@ if (!$result_messages) {
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a href="logout.php" class="btn btn-danger">Déconnexion</a>
+            <a href="/php/logout.php" class="btn btn-danger">Déconnexion</a>
             <img src="\image\presentation\logo.webp" alt="Logo" style="height: 100px;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -116,6 +132,38 @@ if (!$result_messages) {
                     ?>
                 </div>
                 <div class="info-block">
+                    <h3>Validation des avis visiteurs</h3>
+                    <?php if ($result_avis && $result_avis->num_rows > 0): ?>
+                        <ul class="list-group">
+                            <?php while($avis = $result_avis->fetch_assoc()): ?>
+                                <li class="list-group-item">
+                                    <strong><?php echo htmlspecialchars($avis['nom']); ?></strong>
+                                    <span>
+                                        <?php
+                                        $note = (int)$avis['note'];
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            if ($i <= $note) {
+                                                echo '<i class="fas fa-star text-warning"></i>';
+                                            } else {
+                                                echo '<i class="far fa-star text-warning"></i>';
+                                            }
+                                        }
+                                        ?>
+                                    </span>
+                                    <p><?php echo nl2br(htmlspecialchars($avis['avis'])); ?></p>
+                                    <form method="post" action="valider_avis.php" style="display:inline;">
+                                        <input type="hidden" name="id" value="<?php echo $avis['id']; ?>">
+                                        <button type="submit" name="action" value="valider" class="btn btn-success btn-sm">Valider</button>
+                                        <button type="submit" name="action" value="refuser" class="btn btn-danger btn-sm">Refuser</button>
+                                    </form>
+                                </li>
+                            <?php endwhile; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p>Aucun avis en attente de validation.</p>
+                    <?php endif; ?>
+                </div>
+                <div class="info-block">
                     <h3>Messages reçus</h3>
                     <?php if ($result_messages->num_rows > 0): ?>
                         <ul class="list-group">
@@ -135,8 +183,32 @@ if (!$result_messages) {
                     <?php endif; ?>
                 </div>
                 <div class="info-block" id="block3">
-                    <h3>Bloc 3</h3>
-                    <p>Contenu du bloc 3</p>
+                    <h3>5 derniers comptes-rendus vétérinaires</h3>
+                    <ul class="list-group">
+                    <?php
+                    // Récupère les 5 derniers comptes-rendus (ici, on suppose que health_comment contient le compte-rendu)
+                    $sql_cr = "SELECT animal_name, health_comment, last_meal, veterinaire 
+                                FROM animals 
+                                WHERE health_comment IS NOT NULL AND health_comment != '' 
+                                ORDER BY last_meal DESC LIMIT 5";
+                    $result_cr = $conn->query($sql_cr);
+
+                    if ($result_cr && $result_cr->num_rows > 0) {
+                        while($row = $result_cr->fetch_assoc()) {
+                            echo "<li class='list-group-item'>";
+                            echo "<strong>" . htmlspecialchars($row['animal_name']) . "</strong> ";
+                            if (!empty($row['veterinaire'])) {
+                                echo "<span class='badge badge-info'>par " . htmlspecialchars($row['veterinaire']) . "</span> ";
+                            }
+                            echo ": " . htmlspecialchars($row['health_comment']);
+                            echo "<br><small>Dernière visite : " . htmlspecialchars($row['last_meal']) . "</small>";
+                            echo "</li>";
+                        }
+                    } else {
+                        echo "<li class='list-group-item'>Aucun compte-rendu trouvé.</li>";
+                    }
+                    ?>
+                    </ul>
                 </div>
             </div>
             <div class="col-md-4">
@@ -151,8 +223,11 @@ if (!$result_messages) {
                         </thead>
                         <tbody>
                             <?php
-                            // Requête pour récupérer les animaux et leurs likes depuis la table animals, triés par nombre de likes
-                            $sql_animals = "SELECT id, animal_name, likes FROM animals ORDER BY likes DESC";
+                            // Requête pour récupérer les animaux et leurs likes, triés par nombre de likes
+                            $sql_animals = "SELECT animals.id, animals.animal_name, IFNULL(animal_likes.likes, 0) AS likes
+                                            FROM animals
+                                            LEFT JOIN animal_likes ON animals.id = animal_likes.id
+                                            ORDER BY likes DESC";
                             $result_animals = $conn->query($sql_animals);
 
                             if ($result_animals->num_rows > 0) {
@@ -306,6 +381,8 @@ if (!$result_messages) {
                 refreshDashboard();
             });
     </script>
+    <?php
+    ?>
 </body>
 </html>
 <?php
